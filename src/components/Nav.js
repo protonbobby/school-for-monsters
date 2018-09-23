@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Nav = ({ students }) => {
+const Nav = ({ students, schools }) => {
   return (
     <div>
       <Link
@@ -14,13 +14,13 @@ const Nav = ({ students }) => {
         replace>Students ({students.length})</Link>
 
       <Link
-        to="/"
-        replace>Schools (#)</Link>
+        to="/Schools"
+        replace>Schools ({schools.length})</Link>
     </div>
   )
 }
 
 //_______________________________________________________________
-const mapStateToProps = ({ students }) => ({ students });
+const mapStateToProps = ({ students, schools }) => ({ students, schools });
 
 export default connect(mapStateToProps)(Nav);

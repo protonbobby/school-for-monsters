@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Students = ({ students }) => {
+import { deleteStudent } from '../store';
+
+const Students = ({ students, deleteStudent }) => {
   return (
     <div>
       <h1>Students</h1>
@@ -10,6 +12,7 @@ const Students = ({ students }) => {
           students.map(student => {
             return <li key={student.id}>
               {student.firstName} {student.lastName} | GPA: {student.gpa}
+              <button onClick={() => deleteStudent(student)}>X</button>
             </li>
           })
         }
@@ -20,5 +23,8 @@ const Students = ({ students }) => {
 
 //_______________________________________________________________
 const mapStateToProps = ({ students }) => ({ students });
+const mapDispatchToProps = dispatch => ({
+  deleteStudent: student => dispatch(deleteStudent(student)),
+})
 
-export default connect(mapStateToProps)(Students);
+export default connect(mapStateToProps, mapDispatchToProps)(Students);

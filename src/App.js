@@ -5,6 +5,7 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 import { loadStudents, loadSchools } from './store';
 import Nav from './components/Nav';
 import Students from './components/Students';
+import Schools from './components/Schools';
 
 class App extends Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ class App extends Component {
           <div>
             <Route component={Nav} />
             <Route path="/students" component={Students} />
+            <Route path="/schools" component={Schools} />
           </div>
         </Router>
       </div>
