@@ -17,8 +17,8 @@ class App extends Component {
     return (
       <div>
         <hr />
-        <Router>
-          <div>
+        <Router >
+          <div >
             <Route component={Nav} />
             <Route path="/students" component={Students} />
             <Route path="/schools" component={Schools} />
@@ -37,7 +37,7 @@ const mapStateToProps = ({ students, schools }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadStudents: () => dispatch(loadStudents()),
-  loadSchools: () => dispatch(loadSchools())
+  loadSchools: () => dispatch(loadSchools()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

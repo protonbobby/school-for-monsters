@@ -26,7 +26,7 @@ const Schools = ({ schools, deleteSchool }) => {
 //_______________________________________________________________
 const mapStateToProps = ({ schools }) => ({ schools });
 const mapDispatchToProps = dispatch => ({
-  deleteSchool: school => dispatch(deleteSchool(school)),
+  deleteSchool: (school) => dispatch(deleteSchool(school)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Schools)

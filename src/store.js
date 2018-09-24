@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const LOAD_STUDENTS = 'LOAD_STUDENTS';
 const DELETE_STUDENT = 'DELETE_STUDENT';
+const CREATE_STUDENT = 'CREATE_STUDENT';
 
 const _loadStudents = (students) => ({
   type: LOAD_STUDENTS,
@@ -17,6 +18,11 @@ const _deleteStudent = (student) => ({
   student,
 });
 
+const _createStudent = (student) => ({
+  type: CREATE_STUDENT,
+  student,
+})
+
 const studentsInitialState = []
 const studentsReducer = (state = studentsInitialState, action) => {
   switch (action.type) {
@@ -24,10 +30,11 @@ const studentsReducer = (state = studentsInitialState, action) => {
       return action.students;
     case DELETE_STUDENT:
       return state.filter(student => student.id !== action.student.id);
+    case CREATE_STUDENT:
+      return [...state, action.student]
     default: return state;
   };
 };
-
 
 export const loadStudents = () => {
   return dispatch => {
@@ -38,7 +45,7 @@ export const loadStudents = () => {
   };
 };
 
-export const deleteStudent = student => {
+export const deleteStudent = (student) => {
   return dispatch => {
     axios.delete(`/student/${student.id}`)
       .then(res => res.data)
@@ -47,16 +54,25 @@ export const deleteStudent = student => {
   };
 };
 
+export const createStudent = (student) => {
+  return dispatch => {
+    return axios.post('/students', student)
+      .then(res => res.data)
+      .then(student => dispatch(_createStudent(student)))
+      .catch(e => console.log(e));
+  };
+};
+
 //_______________________________________________________________
 const LOAD_SCHOOLS = 'LOAD_SCHOOLS';
 const DELETE_SCHOOL = 'DELETE_SCHOOL';
 
-const _loadSchools = schools => ({
+const _loadSchools = (schools) => ({
   type: LOAD_SCHOOLS,
   schools,
 })
 
-const _deleteSchool = school => ({
+const _deleteSchool = (school) => ({
   type: DELETE_SCHOOL,
   school,
 })

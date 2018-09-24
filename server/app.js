@@ -26,17 +26,17 @@ app.get('/schools/:id', (req, res, next) => {
     .catch(next)
 });
 
-app.use(require('body-parser').json());
-app.post('/schools', (req, res, next) => {
-  School.create(req.body)
-    .then((school) => res.send(school))
-    .catch(next)
-});
-
 app.delete('/schools/:id', (req, res, next) => {
   School.findById(req.params.id)
     .then(school => school.destroy())
     .then(() => res.sendStatus(204))
+    .catch(next)
+});
+
+app.use(require('body-parser').json());
+app.post('/schools', (req, res, next) => {
+  School.create(req.body)
+    .then((school) => res.send(school))
     .catch(next)
 });
 
@@ -65,11 +65,6 @@ app.get('/students/:id', (req, res, next) => {
     .catch(next)
 });
 
-app.post('/', (req, res, next) => {
-  Student.create(req.body)
-    .then(student => res.send(student))
-    .catch(next)
-});
 
 app.delete('/student/:id', (req, res, next) => {
   Student.findById(req.params.id)
@@ -77,6 +72,13 @@ app.delete('/student/:id', (req, res, next) => {
     .then(() => res.sendStatus(204))
     .catch(next)
 });
+
+app.post('/students', (req, res, next) => {
+  Student.create(req.body)
+    .then(student => res.send(student))
+    .catch(next)
+});
+
 
 app.put('/student/:id', (req, res, next) => {
   Student.findById(req.params.id)

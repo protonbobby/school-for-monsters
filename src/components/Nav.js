@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Nav = ({ students, schools }) => {
   return (
-    <div>
+    <div className='nav'>
       <Link
         to="/"
         replace>Home</Link>
