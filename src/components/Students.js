@@ -9,7 +9,8 @@ class Students extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      gpa: 0,
+      gpa: '',
+      enrolled: false,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,18 +29,20 @@ class Students extends Component {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       gpa: this.state.gpa,
+      enrolled: this.state.enrolled,
     })
 
     this.setState({
       firstName: '',
       lastName: '',
       gpa: 0,
+      enrolled: false,
     })
   }
 
   render() {
     const { students, deleteStudent } = this.props;
-    const { firstName, lastName, gpa } = this.state;
+    const { firstName, lastName, gpa, enrolled } = this.state;
     const { handleChange, handleSubmit } = this;
     return (
       <div>
@@ -71,8 +74,7 @@ class Students extends Component {
             value={gpa}
             onChange={handleChange}
             type="text"
-            name='gpa'
-            placeholder='4.0' />
+            name='gpa' />
 
           <button disabled={!firstName || !lastName || !gpa}>Submit
             </button>
