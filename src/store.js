@@ -66,6 +66,7 @@ export const createStudent = (student) => {
 //_______________________________________________________________
 const LOAD_SCHOOLS = 'LOAD_SCHOOLS';
 const DELETE_SCHOOL = 'DELETE_SCHOOL';
+const CREATE_SCHOOL = 'CREATE_SCHOOL';
 
 const _loadSchools = (schools) => ({
   type: LOAD_SCHOOLS,
@@ -77,6 +78,11 @@ const _deleteSchool = (school) => ({
   school,
 })
 
+const _createSchool = (school) => ({
+  type: CREATE_SCHOOL,
+  school,
+})
+
 const schoolsInitialState = [];
 const schoolsReducer = (state = schoolsInitialState, action) => {
   switch (action.type) {
@@ -84,6 +90,8 @@ const schoolsReducer = (state = schoolsInitialState, action) => {
       return action.schools;
     case DELETE_SCHOOL:
       return state.filter(school => school.id !== action.school.id);
+    case CREATE_SCHOOL:
+      return [...state, action.school];
     default: return state;
   };
 };
@@ -102,6 +110,15 @@ export const deleteSchool = school => {
     axios.delete(`/schools/${school.id}`)
       .then(res => res.data)
       .then(() => dispatch(_deleteSchool(school)))
+      .catch(e => console.log(e));
+  };
+};
+
+export const createSchool = school => {
+  return dispatch => {
+    axios.post('/schools', school)
+      .then(res => res.data)
+      .then(school => dispatch(_createSchool(school)))
       .catch(e => console.log(e));
   };
 };

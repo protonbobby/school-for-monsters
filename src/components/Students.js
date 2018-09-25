@@ -16,14 +16,10 @@ class Students extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    })
-  }
+  handleChange(e) { this.setState({ [e.target.name]: e.target.value, }) }
 
   handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     this.props.createStudent({
       firstName: this.state.firstName,

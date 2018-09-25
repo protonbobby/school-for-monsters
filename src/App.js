@@ -20,6 +20,7 @@ class App extends Component {
         <Router >
           <div >
             <Route component={Nav} />
+            <Route exact path="/" render={() => <img src="../dist/avenueQ.jpg" id="homeImg"></img>} />
             <Route path="/students" component={Students} />
             <Route path="/schools" component={Schools} />
           </div>
