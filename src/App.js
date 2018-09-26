@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter as Router, Route } from 'react-router-dom';
 
-import { loadStudents, loadSchools } from './store';
+import { loadStudents } from './reducers/students';
+import { loadSchools } from './reducers/schools';
 import Nav from './components/Nav';
 import Students from './components/Students';
 import Schools from './components/Schools';
@@ -20,9 +21,10 @@ class App extends Component {
         <Router >
           <div >
             <Route component={Nav} />
-            <Route exact path="/" render={() => <img src="../dist/avenueQ.jpg" id="homeImg"></img>} />
+            <Route exact path="/" render={() => <img src="../dist/images/avenueQ.jpg" id="homeImg"></img>} />
             <Route path="/students" component={Students} />
             <Route path="/schools" component={Schools} />
+            {/* <Route path="/schools/:id" component={Schools} />  */}
           </div>
         </Router>
       </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { deleteSchool, createSchool } from '../store';
+import { deleteSchool, createSchool } from '../reducers/schools';
 
 class Schools extends Component {
   constructor(props) {

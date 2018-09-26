@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { deleteStudent, createStudent } from '../store';
+import { deleteStudent, createStudent } from '../reducers/students';
 
 class Students extends Component {
   constructor(props) {
