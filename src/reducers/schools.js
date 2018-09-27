@@ -20,7 +20,7 @@ const _createSchool = (school) => ({
   school,
 })
 
-const _updateSchool = () => ({
+const _updateSchool = (school) => ({
   type: UPDATE_SCHOOL,
   school,
 })

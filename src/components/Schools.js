@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 import { deleteSchool, createSchool } from '../reducers/schools';
 
@@ -41,44 +44,56 @@ class Schools extends Component {
       <div>
         <h1>Schools</h1>
 
-        <form onSubmit={handleSubmit}>
-          <label htmlFor='schoolName'>Name</label>
-          <input
-            id='schoolName'
-            value={name}
-            onChange={handleChange}
-            type='text'
-            name='name'
-            placeholder='Monterssori School'
-            autoFocus
-          ></input>
+        <Container>
+          <Form onSubmit={handleSubmit}>
+            <FormGroup>
+              <Label for='schoolName'>Name</Label>
+              <Input
+                id='schoolName'
+                value={name}
+                onChange={handleChange}
+                type='text'
+                name='name'
+                placeholder='Monterssori School'
+                autoFocus />
+            </FormGroup>
 
-          <label htmlFor='address'>Address</label>
-          <input
-            id='address'
-            value={address}
-            onChange={handleChange}
-            type='text'
-            name='address'
-          ></input>
+            <FormGroup>
 
-          <label>
-            Description:
-            <textarea
-              value={description}
-              onChange={handleChange}
-              name='description' />
-          </label>
+              <Label for='address'>Address</Label>
+              <Input
+                id='address'
+                value={address}
+                onChange={handleChange}
+                type='text'
+                name='address'
+              ></Input>
+            </FormGroup>
 
-          <button disabled={!name || !address || !description}>Submit</button>
-        </form>
+            <FormGroup>
+              <Label for='description'>Description</Label>
+              <Input
+                id='description'
+                value={description}
+                onChange={handleChange}
+                type='textarea'
+                name='description' />
+            </FormGroup>
+
+            <Button
+              color='success'
+              disabled={!name || !address || !description}
+            >Submit</Button>
+
+          </Form>
+        </Container>
+
+
         <ul>
           {
             schools.map(school => {
               return <li key={school.id}>
-                {school.name}
-                {school.address}
-                {school.description}
+                <Link to={`/schools/${school.id}`}>{school.name}</Link>
                 <button onClick={() => deleteSchool(school)}>X</button>
               </li>
             })

@@ -10,11 +10,11 @@ const Nav = ({ students, schools }) => {
         replace>Home</Link>
 
       <Link
-        to="/Students"
+        to="/students"
         replace>Students ({students.length})</Link>
 
       <Link
-        to="/Schools"
+        to="/schools"
         replace>Schools ({schools.length})</Link>
     </div>
   )

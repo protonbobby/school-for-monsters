@@ -5,6 +5,7 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 import { loadStudents } from './reducers/students';
 import { loadSchools } from './reducers/schools';
 import Nav from './components/Nav';
+import School from './components/School';
 import Students from './components/Students';
 import Schools from './components/Schools';
 
@@ -21,10 +22,13 @@ class App extends Component {
         <Router >
           <div >
             <Route component={Nav} />
+
             <Route exact path="/" render={() => <img src="../dist/images/avenueQ.jpg" id="homeImg"></img>} />
-            <Route path="/students" component={Students} />
-            <Route path="/schools" component={Schools} />
-            {/* <Route path="/schools/:id" component={Schools} />  */}
+
+            <Route exact path="/students" component={Students} />
+            <Route exact path="/schools" component={Schools} />
+
+            <Route path="/schools/:id" component={School} />
           </div>
         </Router>
       </div>
