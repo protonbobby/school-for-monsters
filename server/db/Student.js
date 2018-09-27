@@ -18,10 +18,6 @@ const Student = conn.define('student', {
     },
     defaultValue: 0,
   },
-  enrolled: {
-    type: conn.Sequelize.BOOLEAN,
-    defaultValue: false,
-  }
 });
 
 module.exports = Student;

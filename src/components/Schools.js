@@ -93,7 +93,7 @@ class Schools extends Component {
           {
             schools.map(school => {
               return <li key={school.id}>
-                <Link to={`/schools/${school.id}`}>{school.name}</Link>
+                <Link to={`/schools/${school.id}`}>{school.name} </Link>
                 ({school.students.length})
                 <button onClick={() => deleteSchool(school)}>X</button>
               </li>

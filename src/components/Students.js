@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 
+import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+
 import { deleteStudent, createStudent } from '../reducers/students';
 
 class Students extends Component {
@@ -11,7 +13,7 @@ class Students extends Component {
       firstName: '',
       lastName: '',
       gpa: '',
-      enrolled: false,
+      schoolId: '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,56 +28,85 @@ class Students extends Component {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       gpa: this.state.gpa,
-      enrolled: this.state.enrolled,
+      schoolId: this.state.schoolId
     })
 
     this.setState({
       firstName: '',
       lastName: '',
       gpa: 0,
-      enrolled: false,
+      schoolId: '',
     })
   }
 
   render() {
     const { students, deleteStudent } = this.props;
-    const { firstName, lastName, gpa, enrolled } = this.state;
+    const { firstName, lastName, gpa, schoolId } = this.state;
     const { handleChange, handleSubmit } = this;
     return (
       <div>
         <h1>Students</h1>
 
-        <form onSubmit={handleSubmit}>
-          <label htmlFor='firstName'>First </label>
-          <input
-            id='firstName'
-            value={firstName}
-            onChange={handleChange}
-            type="text"
-            name='firstName'
-            placeholder='Charlie'
-            autoFocus />
+        <Container>
+          <Form onSubmit={handleSubmit}>
+            <FormGroup>
+              <Label for='firstName'>First </Label>
+              <Input
+                id='firstName'
+                value={firstName}
+                onChange={handleChange}
+                type="text"
+                name='firstName'
+                placeholder='Charlie'
+                autoFocus />
+            </FormGroup>
 
-          <label htmlFor='lastName'>Last </label>
-          <input
-            id='lastName'
-            value={lastName}
-            onChange={handleChange}
-            type="text"
-            name='lastName'
-            placeholder='Brown' />
+            <FormGroup>
+              <Label for='lastName'>Last </Label>
+              <Input
+                id='lastName'
+                value={lastName}
+                onChange={handleChange}
+                type="text"
+                name='lastName'
+                placeholder='Brown' />
+            </FormGroup>
 
-          <label htmlFor='gpa'>GPA </label>
-          <input
-            id='gpa'
-            value={gpa}
-            onChange={handleChange}
-            type="text"
-            name='gpa' />
+            <FormGroup>
+              <Label for='gpa'>GPA </Label>
+              <Input
+                id='gpa'
+                value={gpa}
+                onChange={handleChange}
+                type="text"
+                name='gpa' />
+            </FormGroup>
 
-          <button disabled={!firstName || !lastName || !gpa}>Submit
-            </button>
-        </form>
+            <FormGroup>
+              <Label for='schoolId'>School</Label>
+              <Input
+                id='schoolId'
+                value={schoolId}
+                onChange={handleChange}
+                type='select'
+                name='schoolId'>
+                <option >Not Enrolled</option>
+                {
+                  this.props.schools.map(school => {
+                    return <option key={school.id} value={school.id}>{school.name}</option>
+                  })
+                }
+              </Input>
+            </FormGroup>
+
+            <Button
+              color='success'
+              disabled={!firstName || !lastName || !gpa}
+            >Submit
+            </Button>
+          </Form>
+        </Container>
+
 
         <ul>
           {
