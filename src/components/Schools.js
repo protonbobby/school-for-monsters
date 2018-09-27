@@ -94,6 +94,7 @@ class Schools extends Component {
             schools.map(school => {
               return <li key={school.id}>
                 <Link to={`/schools/${school.id}`}>{school.name}</Link>
+                ({school.students.length})
                 <button onClick={() => deleteSchool(school)}>X</button>
               </li>
             })
@@ -105,7 +106,14 @@ class Schools extends Component {
 }
 
 //_______________________________________________________________
-const mapStateToProps = ({ schools }) => ({ schools });
+const mapStateToProps = ({ schools, students }) => {
+
+  return {
+    schools,
+    students,
+
+  }
+}
 const mapDispatchToProps = dispatch => ({
   deleteSchool: (school) => dispatch(deleteSchool(school)),
   createSchool: (school) => dispatch(createSchool(school)),

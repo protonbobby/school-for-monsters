@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
 
 import { deleteStudent, createStudent } from '../reducers/students';
 
@@ -81,6 +82,7 @@ class Students extends Component {
             students.map(student => {
               return <li key={student.id}>
                 {student.firstName} {student.lastName} | GPA: {student.gpa}
+                <Link to={`/schools/${student.schoolId}`}>{this.props.matchSchool(student.schoolId)}</Link>
                 <button onClick={() => deleteStudent(student)}>X</button>
               </li>
             })
@@ -93,9 +95,17 @@ class Students extends Component {
 }
 
 
-
 //_______________________________________________________________
-const mapStateToProps = ({ students }) => ({ students });
+const mapStateToProps = ({ students, schools }) => {
+  const matchSchool = (schoolId) => {
+    const school = schools.find(school => {
+      return school.id === schoolId
+    })
+    return school.name
+  }
+
+  return { students, schools, matchSchool };
+}
 const mapDispatchToProps = dispatch => ({
   deleteStudent: (student) => dispatch(deleteStudent(student)),
   createStudent: (student) => dispatch(createStudent(student)),
