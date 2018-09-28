@@ -1,124 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Badge, Button } from 'reactstrap';
 
 import { deleteStudent, createStudent } from '../reducers/students';
 
 class Students extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      firstName: '',
-      lastName: '',
-      gpa: '',
-      schoolId: '',
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(e) { this.setState({ [e.target.name]: e.target.value, }) }
-
-  handleSubmit(e) {
-    e.preventDefault();
-
-    this.props.createStudent({
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      gpa: this.state.gpa,
-      schoolId: this.state.schoolId
-    })
-
-    this.setState({
-      firstName: '',
-      lastName: '',
-      gpa: 0,
-      schoolId: '',
-    })
-  }
 
   render() {
     const { students, deleteStudent } = this.props;
-    const { firstName, lastName, gpa, schoolId } = this.state;
-    const { handleChange, handleSubmit } = this;
     return (
       <div>
         <h1>Students</h1>
 
         <Container>
-          <Form onSubmit={handleSubmit}>
-            <FormGroup>
-              <Label for='firstName'>First </Label>
-              <Input
-                id='firstName'
-                value={firstName}
-                onChange={handleChange}
-                type="text"
-                name='firstName'
-                placeholder='Charlie'
-                autoFocus />
-            </FormGroup>
+          <Link to='/students/create' replace>
+            <Button color="primary" >Create Student</Button>
+          </Link>
 
-            <FormGroup>
-              <Label for='lastName'>Last </Label>
-              <Input
-                id='lastName'
-                value={lastName}
-                onChange={handleChange}
-                type="text"
-                name='lastName'
-                placeholder='Brown' />
-            </FormGroup>
+          <ListGroup>
+            {
+              students.map(student => {
+                return <ListGroupItem key={student.id}>
+                  {student.lastName}, {student.firstName}
 
-            <FormGroup>
-              <Label for='gpa'>GPA </Label>
-              <Input
-                id='gpa'
-                value={gpa}
-                onChange={handleChange}
-                type="text"
-                name='gpa' />
-            </FormGroup>
+                  <span className='floatRight'>
+                    <Link to={`/schools/${student.schoolId}`}>{this.props.matchSchool(student.schoolId)}</Link>
+                    <button onClick={() => deleteStudent(student)}>X</button>
+                  </span>
 
-            <FormGroup>
-              <Label for='schoolId'>School</Label>
-              <Input
-                id='schoolId'
-                value={schoolId}
-                onChange={handleChange}
-                type='select'
-                name='schoolId'>
-                <option >Not Enrolled</option>
-                {
-                  this.props.schools.map(school => {
-                    return <option key={school.id} value={school.id}>{school.name}</option>
-                  })
-                }
-              </Input>
-            </FormGroup>
-
-            <Button
-              color='success'
-              disabled={!firstName || !lastName || !gpa}
-            >Submit
-            </Button>
-          </Form>
+                </ListGroupItem>
+              })
+            }
+          </ListGroup>
         </Container>
-
-
-        <ul>
-          {
-            students.map(student => {
-              return <li key={student.id}>
-                {student.firstName} {student.lastName} | GPA: {student.gpa}
-                <Link to={`/schools/${student.schoolId}`}>{this.props.matchSchool(student.schoolId)}</Link>
-                <button onClick={() => deleteStudent(student)}>X</button>
-              </li>
-            })
-          }
-        </ul>
 
       </div >
     )
