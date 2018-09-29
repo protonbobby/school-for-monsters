@@ -23,7 +23,7 @@ class Students extends Component {
             {
               students.map(student => {
                 return <ListGroupItem key={student.id}>
-                  {student.lastName}, {student.firstName}
+                  {student.last}, {student.first}
 
                   <span className='floatRight'>
                     <Link to={`/schools/${student.schoolId}`}>{this.props.matchSchool(student.schoolId)}</Link>

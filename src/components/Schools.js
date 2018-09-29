@@ -37,8 +37,8 @@ class Schools extends Component {
   }
 
   render() {
-    const { schools, deleteSchool } = this.props;
     const { name, address, description } = this.state;
+    const { schools, deleteSchool } = this.props;
     const { handleChange, handleSubmit } = this;
     return (
       <div>
@@ -47,9 +47,9 @@ class Schools extends Component {
         <Container>
           <Form onSubmit={handleSubmit}>
             <FormGroup>
-              <Label for='schoolName'>Name</Label>
+              <Label for='name'>Name</Label>
               <Input
-                id='schoolName'
+                id='name'
                 value={name}
                 onChange={handleChange}
                 type='text'

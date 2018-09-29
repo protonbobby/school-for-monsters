@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { createStudent } from '../reducers/students';
-
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
+import { createStudent } from '../reducers/students';
+
 class CreateStudent extends Component {
-  constructor(props) {
-    super(props);
+  constructor({ props }) {
+    super();
     this.state = {
       first: '',
       last: '',
@@ -18,7 +18,7 @@ class CreateStudent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) { this.setState({ [e.target.name]: e.target.value }) };
+  handleChange(e) { this.setState({ [e.target.name]: e.target.value, }) };
 
   handleSubmit(e) {
     e.preventDefault();
@@ -28,7 +28,7 @@ class CreateStudent extends Component {
       last: this.state.last,
       gpa: this.state.gpa,
       schoolId: this.state.schoolId,
-    })
+    });
 
     this.setState({
       first: '',
@@ -39,7 +39,8 @@ class CreateStudent extends Component {
   }
 
   render() {
-    const { firstName, lastName, gpa, schoolId } = this.state;
+    const { first, last, gpa, schoolId } = this.state;
+    const { schools } = this.props;
     const { handleChange, handleSubmit } = this;
     return (
       <div>
@@ -48,30 +49,30 @@ class CreateStudent extends Component {
         <Container>
           <Form onSubmit={handleSubmit}>
             <FormGroup>
-              <Label for='firstName'>First </Label>
+              <Label for='first'>First</Label>
               <Input
-                id='firstName'
-                value={firstName}
+                id='first'
+                value={first}
                 onChange={handleChange}
-                type="text"
-                name='firstName'
+                type='text'
+                name='first'
                 placeholder='Charlie'
                 autoFocus />
             </FormGroup>
 
             <FormGroup>
-              <Label for='lastName'>Last </Label>
+              <Label for='last'>Last</Label>
               <Input
-                id='lastName'
-                value={lastName}
+                id='last'
+                value={last}
                 onChange={handleChange}
                 type="text"
-                name='lastName'
+                name='last'
                 placeholder='Brown' />
             </FormGroup>
 
             <FormGroup>
-              <Label for='gpa'>GPA </Label>
+              <Label for='gpa'>GPA</Label>
               <Input
                 id='gpa'
                 value={gpa}
@@ -90,15 +91,16 @@ class CreateStudent extends Component {
                 name='schoolId'>
                 <option >Not Enrolled</option>
                 {
-                  this.props.schools.map(school => {
+                  schools.map(school => {
                     return <option key={school.id} value={school.id}>{school.name}</option>
                   })
                 }
               </Input>
             </FormGroup>
 
-            <Button color='success' disabled={!firstName || !lastName || !gpa}
+            <Button color='success' disabled={!first || !last || !gpa}
             >Submit</Button>
+
           </Form>
         </Container>
       </div>
@@ -106,7 +108,14 @@ class CreateStudent extends Component {
   }
 };
 
-const mapStateToProps = ({ students, schools }) => ({ students, schools });
+//_______________________________________________________________
+const mapStateToProps = ({ schools, students }) => {
+
+  return {
+    schools,
+    students,
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   createStudent: (student) => dispatch(createStudent(student)),
