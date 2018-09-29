@@ -1,11 +1,11 @@
 const conn = require('./conn');
 
 const Student = conn.define('student', {
-  firstName: {
+  first: {
     type: conn.Sequelize.STRING,
     allowNull: false,
   },
-  lastName: {
+  last: {
     type: conn.Sequelize.STRING,
     allowNull: false,
   },

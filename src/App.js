@@ -8,6 +8,7 @@ import Nav from './components/Nav';
 import School from './components/School';
 import Students from './components/Students';
 import Schools from './components/Schools';
+import CreateStudent from './components/CreateStudent';
 
 class App extends Component {
   componentDidMount() {
@@ -23,12 +24,13 @@ class App extends Component {
           <div >
             <Route component={Nav} />
 
-            <Route exact path="/" render={() => <img src="../dist/images/avenueQ.jpg" id="homeImg"></img>} />
+            <Route exact path="/" render={() => <img src="../dist/images/avenueq-monsters.jpg" id="homeImg"></img>} />
 
             <Route exact path="/students" component={Students} />
             <Route exact path="/schools" component={Schools} />
 
-            <Route path="/schools/:id" component={School} />
+            <Route exact path="/schools/:id" component={School} />
+            <Route exact path="/students/create" component={CreateStudent} />
           </div>
         </Router>
       </div>

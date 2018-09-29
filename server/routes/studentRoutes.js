@@ -4,7 +4,7 @@ const School = require('../db/School');
 
 router.get('/', (req, res, next) => {
   Student.findAll({
-    order: [['gpa', 'DESC']],
+    order: [['last', 'DESC']],
     include: [School]
   })
     .then(students => res.send(students))
