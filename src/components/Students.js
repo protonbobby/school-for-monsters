@@ -22,15 +22,21 @@ class Students extends Component {
           <ListGroup>
             {
               students.map(student => {
-                return <ListGroupItem key={student.id}>
-                  {student.last}, {student.first}
+                return (
+                  <ListGroupItem key={student.id}>
 
-                  <span className='floatRight'>
-                    <Link to={`/schools/${student.schoolId}`}>{this.props.matchSchool(student.schoolId)}</Link>
-                    <button onClick={() => deleteStudent(student)}>X</button>
-                  </span>
+                    <Link to={`/students/${student.id}`}>
+                      {student.last}, {student.first}
+                    </Link>
 
-                </ListGroupItem>
+                    <span className='floatRight'>
+                      <Link to={`/schools/${student.schoolId}`}>{this.props.matchSchool(student.schoolId)}</Link>
+
+                      <button onClick={() => deleteStudent(student)}>X</button>
+                    </span>
+
+                  </ListGroupItem>
+                )
               })
             }
           </ListGroup>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { loadStudents } from './reducers/students';
 import { loadSchools } from './reducers/schools';
@@ -22,6 +22,7 @@ class App extends Component {
         <hr />
         <Router >
           <div >
+
             <Route component={Nav} />
 
             <Route exact path="/" render={() => <img src="../dist/images/avenueq-monsters.jpg" id="homeImg"></img>} />
@@ -29,8 +30,16 @@ class App extends Component {
             <Route exact path="/students" component={Students} />
             <Route exact path="/schools" component={Schools} />
 
-            <Route exact path="/schools/:id" component={School} />
-            <Route exact path="/students/create" component={CreateStudent} />
+            <Switch>
+              <Route path='/schools/create' component={School} />
+              <Route path="/schools/:id" component={School} />
+            </Switch>
+
+            <Switch>
+              <Route path="/students/create" component={CreateStudent} />
+              <Route path='/students/:id' component={CreateStudent} />
+            </Switch>
+
           </div>
         </Router>
       </div>

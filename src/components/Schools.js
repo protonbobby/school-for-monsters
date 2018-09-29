@@ -111,7 +111,6 @@ const mapStateToProps = ({ schools, students }) => {
   return {
     schools,
     students,
-
   }
 }
 const mapDispatchToProps = dispatch => ({
