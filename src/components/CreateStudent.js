@@ -77,7 +77,10 @@ class CreateStudent extends Component {
                 id='gpa'
                 value={gpa}
                 onChange={handleChange}
-                type="text"
+                type="number"
+                step="0.1"
+                min='0'
+                max='4.0'
                 name='gpa' />
             </FormGroup>
 

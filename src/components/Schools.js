@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Badge, Button } from 'reactstrap';
 
 import { deleteSchool, createSchool } from '../reducers/schools';
 
@@ -45,61 +45,29 @@ class Schools extends Component {
         <h1>Schools</h1>
 
         <Container>
-          <Form onSubmit={handleSubmit}>
-            <FormGroup>
-              <Label for='name'>Name</Label>
-              <Input
-                id='name'
-                value={name}
-                onChange={handleChange}
-                type='text'
-                name='name'
-                placeholder='Monterssori School'
-                autoFocus />
-            </FormGroup>
+          <Link to='/schools/create' replace>
+            <Button color='primary'>Create School</Button>
+          </Link>
 
-            <FormGroup>
 
-              <Label for='address'>Address</Label>
-              <Input
-                id='address'
-                value={address}
-                onChange={handleChange}
-                type='text'
-                name='address'
-              ></Input>
-            </FormGroup>
+          <ListGroup>
+            {
+              schools.map(school => {
+                return (
+                  <ListGroupItem key={school.id}>
 
-            <FormGroup>
-              <Label for='description'>Description</Label>
-              <Input
-                id='description'
-                value={description}
-                onChange={handleChange}
-                type='textarea'
-                name='description' />
-            </FormGroup>
+                    <Link to={`/schools/${school.id}`}>{school.name} </Link>
+                    ({school.students.length})
 
-            <Button
-              color='success'
-              disabled={!name || !address || !description}
-            >Submit</Button>
-
-          </Form>
+                    <span className='floatRight'>
+                      <Button color='danger' onClick={() => deleteSchool(school)}>X</Button>
+                    </span>
+                  </ListGroupItem>
+                )
+              })
+            }
+          </ListGroup>
         </Container>
-
-
-        <ul>
-          {
-            schools.map(school => {
-              return <li key={school.id}>
-                <Link to={`/schools/${school.id}`}>{school.name} </Link>
-                ({school.students.length})
-                <button onClick={() => deleteSchool(school)}>X</button>
-              </li>
-            })
-          }
-        </ul>
       </div>
     )
   }

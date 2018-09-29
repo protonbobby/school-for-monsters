@@ -32,7 +32,7 @@ class Students extends Component {
                     <span className='floatRight'>
                       <Link to={`/schools/${student.schoolId}`}>{this.props.matchSchool(student.schoolId)}</Link>
 
-                      <button onClick={() => deleteStudent(student)}>X</button>
+                      <Button color='danger' onClick={() => deleteStudent(student)}>X</Button>
                     </span>
 
                   </ListGroupItem>
