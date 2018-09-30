@@ -11,6 +11,8 @@ const reducer = combineReducers({
   schools,
 });
 
+export default createStore(reducer, applyMiddleware(thunk, logger));
+
 //______________________selectors_________________________________________
 export const fetch = (id) => {
   // type = type.toString();
@@ -25,4 +27,3 @@ export const matchObject = (obj, matchObj) => {
   }, true);
 };
 
-export default createStore(reducer, applyMiddleware(thunk, logger));

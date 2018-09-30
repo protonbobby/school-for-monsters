@@ -2,19 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Nav = ({ students, schools }) => {
+import { currentNav } from '../selectors';
+
+const NavBar = ({ students, schools, path }) => {
   return (
     <div className='nav'>
-      <Link
-        to="/"
+      <Link to="/"
+        style={currentNav('/', path)}
         replace>Home</Link>
 
-      <Link
-        to="/students"
+      <Link to="/students"
+        style={currentNav('/students', path, true)}
         replace>Students ({students.length})</Link>
 
-      <Link
-        to="/schools"
+      <Link to="/schools"
+        style={currentNav('/schools', path, true)}
         replace>Schools ({schools.length})</Link>
     </div>
   )
@@ -23,4 +25,4 @@ const Nav = ({ students, schools }) => {
 //_______________________________________________________________
 const mapStateToProps = ({ students, schools }) => ({ students, schools });
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps)(NavBar);

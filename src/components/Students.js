@@ -5,18 +5,32 @@ import { Link } from 'react-router-dom';
 import { Container, ListGroup, ListGroupItem, Badge, Button } from 'reactstrap';
 
 import { deleteStudent, createStudent } from '../reducers/students';
+import { selected } from '../selectors';
 
 class Students extends Component {
 
   render() {
-    const { students, deleteStudent } = this.props;
+    const { students, deleteStudent, filter } = this.props;
+
     return (
       <div>
         <h1>Students</h1>
 
         <Container>
           <Link to='/students/create' replace>
-            <Button color="primary" >Create Student</Button>
+            <Button color="primary">Create Student</Button>
+          </Link>
+
+          <Link to='/students/' replace>
+            <Button color={selected(undefined, filter)}>All</Button>
+          </Link>
+
+          <Link to='/students/enrolled' replace>
+            <Button color={selected('enrolled', filter)}>Enrolled</Button>
+          </Link>
+
+          <Link to='/students/unenrolled' replace>
+            <Button color={selected('unenrolled', filter)}>Unenrolled</Button>
           </Link>
 
           <ListGroup>
@@ -49,7 +63,18 @@ class Students extends Component {
 
 
 //_______________________________________________________________
-const mapStateToProps = ({ students, schools }) => {
+const mapStateToProps = ({ students, schools }, { filter }) => {
+  let enrollment = students;
+  if (filter) {
+    if (filter === 'enrolled') {
+      enrollment = enrollment.filter(student => student.schoolId)
+    }
+    if (filter === 'unenrolled') {
+      enrollment = enrollment.filter(student => !student.schoolId)
+    }
+  }
+
+
   const matchSchool = (schoolId) => {
     const school = schools.find(school => {
       return school.id === schoolId
@@ -57,7 +82,12 @@ const mapStateToProps = ({ students, schools }) => {
     return school.name
   }
 
-  return { students, schools, matchSchool };
+  return {
+    students: enrollment,
+    schools,
+    matchSchool,
+    filter,
+  };
 }
 const mapDispatchToProps = dispatch => ({
   deleteStudent: (student) => dispatch(deleteStudent(student)),

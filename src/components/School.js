@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateSchool } from '../reducers/schools';
+import { createSchool, updateSchool } from '../reducers/schools';
 
 class School extends Component {
   constructor({ school }) {
@@ -10,6 +10,9 @@ class School extends Component {
       address: school ? school.address : '',
       description: school ? school.description : '',
     }
+
+    this.status = school ? updateSchool : createSchool;
+
     this.handleChange = this.handleChange.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -30,7 +33,7 @@ class School extends Component {
   onSave(e) {
     e.preventDefault();
 
-    this.props.updateSchool({
+    this.props[this.status]({
       id: this.props.school.id,
       name: this.state.name,
       address: this.state.address,
@@ -100,6 +103,7 @@ const mapStateToProps = ({ schools }, { match, history }) => {
 }
 const mapDispatchToProps = dispatch => ({
   updateSchool: (school) => dispatch(updateSchool(school)),
+  createSchool: (school) => dispatch(createSchool(school)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(School);

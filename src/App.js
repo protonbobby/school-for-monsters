@@ -4,7 +4,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { loadStudents } from './reducers/students';
 import { loadSchools } from './reducers/schools';
-import Nav from './components/Nav';
+import NavBar from './components/NavBar';
 import School from './components/School';
 import Students from './components/Students';
 import Schools from './components/Schools';
@@ -23,7 +23,7 @@ class App extends Component {
         <Router >
           <div >
 
-            <Route component={Nav} />
+            <Route component={({ location }) => <NavBar path={location.pathname} />} />
 
             <Route exact path="/" render={() => <img src="../dist/images/avenueq-monsters.jpg" id="homeImg"></img>} />
 
@@ -31,13 +31,15 @@ class App extends Component {
             <Route exact path="/schools" component={Schools} />
 
             <Switch>
-              <Route path='/schools/create' component={School} />
+              <Route path="/schools/create" component={School} />
               <Route path="/schools/:id" component={School} />
             </Switch>
 
+            <Route path="/students/:filter?" component={({ match }) => <Students filter={match.params.filter} />} />
+
             <Switch>
               <Route path="/students/create" component={CreateStudent} />
-              <Route path='/students/:id' component={CreateStudent} />
+              <Route path="/students/:id" component={CreateStudent} />
             </Switch>
 
           </div>
