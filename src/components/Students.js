@@ -5,12 +5,11 @@ import { Link } from 'react-router-dom';
 import { Container, ListGroup, ListGroupItem, Badge, Button } from 'reactstrap';
 
 import { deleteStudent, createStudent } from '../reducers/students';
-import { selected } from '../selectors';
+import { selected, matchSchool, enrolled } from '../selectors';
 
 class Students extends Component {
-
   render() {
-    const { students, deleteStudent, filter } = this.props;
+    const { students, schools, deleteStudent, filter } = this.props;
 
     return (
       <div>
@@ -44,7 +43,7 @@ class Students extends Component {
                     </Link>
 
                     <span className='floatRight'>
-                      <Link to={`/schools/${student.schoolId}`}>{this.props.matchSchool(student.schoolId)}</Link>
+                      <Link to={`/schools/${student.schoolId}`}>{matchSchool(schools, student.schoolId)}</Link>
 
                       <Button color='danger' onClick={() => deleteStudent(student)}>X</Button>
                     </span>
@@ -55,40 +54,18 @@ class Students extends Component {
             }
           </ListGroup>
         </Container>
-
       </div >
     )
   }
 }
 
-
 //_______________________________________________________________
-const mapStateToProps = ({ students, schools }, { filter }) => {
-  let enrollment = students;
-  if (filter) {
-    if (filter === 'enrolled') {
-      enrollment = enrollment.filter(student => student.schoolId)
-    }
-    if (filter === 'unenrolled') {
-      enrollment = enrollment.filter(student => !student.schoolId)
-    }
-  }
+const mapStateToProps = ({ students, schools }, { filter }) => ({
+  students: enrolled(students, filter),
+  schools,
+  filter,
+})
 
-
-  const matchSchool = (schoolId) => {
-    const school = schools.find(school => {
-      return school.id === schoolId
-    })
-    return school.name
-  }
-
-  return {
-    students: enrollment,
-    schools,
-    matchSchool,
-    filter,
-  };
-}
 const mapDispatchToProps = dispatch => ({
   deleteStudent: (student) => dispatch(deleteStudent(student)),
   createStudent: (student) => dispatch(createStudent(student)),
