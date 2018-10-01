@@ -3,26 +3,40 @@ import { connect } from 'react-redux';
 
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
-import { createSchool } from './reducers/schools';
+import { createSchool, updateSchool } from '../reducers/schools';
+import { findSchool } from '../selectors';
 
-class CreateSchool extends Component {
-  constructor(props) {
-    super(props);
+class SchoolCreateUpdate extends Component {
+  constructor({ school }) {
+    super();
     this.state = {
-      name: '',
-      address: '',
-      description: '',
-    };
+      name: school ? school.name : '',
+      address: school ? school.address : '',
+      description: school ? school.description : '',
+    }
     this.handleChange = this.handleChange.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   handleChange(e) { this.setState({ [e.target.name]: e.target.value }) };
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.school && this.props.school) {
+      this.setState({
+        name: this.props.school.name,
+        address: this.props.school.address,
+        description: this.props.school.description,
+      })
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
-    this.props.createSchool({
+    const action = () => this.props.id ? this.props.updateSchool : this.props.createSchool;
+
+    action()({
       name: this.state.name,
       address: this.state.address,
       description: this.state.description,
@@ -33,12 +47,14 @@ class CreateSchool extends Component {
       address: '',
       description: '',
     })
+
+    this.props.history.push('/schools');
   }
 
   render() {
     const { name, address, description } = this.state;
-    const { schools } = this.props;
     const { handleChange, handleSubmit } = this;
+    const disabled = !name || !address || !description;
     return (
       <div>
         <h1>Add School</h1>
@@ -83,7 +99,7 @@ class CreateSchool extends Component {
 
             <Button
               color='success'
-              disabled={!name || !address || !description}
+              disabled={disabled}
             >Submit</Button>
 
           </Form>
@@ -95,14 +111,15 @@ class CreateSchool extends Component {
 };
 
 //_______________________________________________________________
-const mapStateToProps = ({ schools }) => {
+const mapStateToProps = ({ schools, }, { id, history, }) => ({
+  schools,
+  school: findSchool(schools, id),
+  history,
+})
 
-  return {
-    schools,
-  }
-}
 const mapDispatchToProps = dispatch => ({
   createSchool: (school) => dispatch(createSchool(school)),
+  updateSchool: (school) => dispatch(updateSchool(school)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSchool)
+export default connect(mapStateToProps, mapDispatchToProps)(SchoolCreateUpdate)
