@@ -21,7 +21,7 @@ export const matchSchool = (schools, schoolId) => {
 export const enrolled = (students, filter = undefined) => {
   let enrollment = students;
   if (filter) {
-    if (filter === 'enrolled') {
+    if (filter === 'enrolled' || typeof filter * 1 === 'number') {
       enrollment = enrollment.filter(student => student.schoolId)
     }
     if (filter === 'unenrolled') {

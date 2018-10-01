@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Container, Form, FormGroup, Label, Input, Button, ListGroup, ListGroupItem } from 'reactstrap';
 
 import { deleteSchool, createSchool, updateSchool } from '../reducers/schools';
 import { giveMeOne } from '../selectors';
@@ -60,7 +60,7 @@ class SchoolCreateUpdate extends Component {
 
   render() {
     const { name, address, description } = this.state;
-    const { school, deleteSchool } = this.props;
+    const { school, students, deleteSchool } = this.props;
     const { handleChange, handleSubmit } = this;
     const disabled = !name || !address || !description;
     const action = this.props.id ? 'Edit' : 'Add';
@@ -124,15 +124,25 @@ class SchoolCreateUpdate extends Component {
           </Form>
         </Container>
 
+        <h2>Students</h2>
+        <Container>
+          <ListGroup>
+            {school.students.map(student => {
+              return <ListGroupItem key={student.id}>{student.last}, {student.first}</ListGroupItem>
+            })}
+          </ListGroup>
+        </Container>
+
       </div >
     )
   };
 };
 
 //_______________________________________________________________
-const mapStateToProps = ({ schools }, { id, }) => ({
+const mapStateToProps = ({ schools, students }, { id, }) => ({
   schools,
   school: giveMeOne(schools, id),
+  students,
 })
 
 const mapDispatchToProps = dispatch => ({
