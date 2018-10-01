@@ -17,7 +17,7 @@ class Students extends Component {
 
         <Container>
           <Link to='/students/create' replace>
-            <Button color="primary">Create Student</Button>
+            <Button color="primary">Add Student</Button>
           </Link>
 
           <Link to='/students/' replace>

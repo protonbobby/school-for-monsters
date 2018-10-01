@@ -34,13 +34,20 @@ class SchoolCreateUpdate extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const action = () => this.props.id ? this.props.updateSchool : this.props.createSchool;
-
-    action()({
-      name: this.state.name,
-      address: this.state.address,
-      description: this.state.description,
-    })
+    if (this.props.id === undefined) {
+      this.props.createSchool({
+        name: this.state.name,
+        address: this.state.address,
+        description: this.state.description,
+      })
+    } else {
+      this.props.updateSchool({
+        id: this.props.id,
+        name: this.state.name,
+        address: this.state.address,
+        description: this.state.description,
+      })
+    }
 
     this.setState({
       name: '',
@@ -53,11 +60,13 @@ class SchoolCreateUpdate extends Component {
 
   render() {
     const { name, address, description } = this.state;
+    const { id } = this.props;
     const { handleChange, handleSubmit } = this;
     const disabled = !name || !address || !description;
+    const action = id ? 'Edit' : 'Add';
     return (
       <div>
-        <h1>Add School</h1>
+        <h1>{action} School</h1>
 
         <Container>
           <Form onSubmit={handleSubmit}>
@@ -100,7 +109,7 @@ class SchoolCreateUpdate extends Component {
             <Button
               color='success'
               disabled={disabled}
-            >Submit</Button>
+            >Save</Button>
 
           </Form>
         </Container>

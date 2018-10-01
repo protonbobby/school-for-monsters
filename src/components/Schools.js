@@ -7,6 +7,8 @@ import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { deleteSchool, createSchool } from '../reducers/schools';
 
 class Schools extends Component {
+
+
   render() {
     const { schools, deleteSchool } = this.props;
     return (
@@ -15,7 +17,7 @@ class Schools extends Component {
 
         <Container>
           <Link to='/schools/create' replace>
-            <Button color='primary'>Create School</Button>
+            <Button color='primary'>Add School</Button>
           </Link>
 
           <ListGroup>

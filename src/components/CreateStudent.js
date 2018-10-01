@@ -81,7 +81,8 @@ class CreateStudent extends Component {
                 step="0.1"
                 min='0'
                 max='4.0'
-                name='gpa' />
+                name='gpa'
+                placeholder='3.0' />
             </FormGroup>
 
             <FormGroup>
