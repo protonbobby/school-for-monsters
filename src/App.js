@@ -5,10 +5,10 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { loadStudents } from './reducers/students';
 import { loadSchools } from './reducers/schools';
 import NavBar from './components/NavBar';
-import School from './components/School';
 import Students from './components/Students';
+import StudentCreateUpdate from './components/StudentCreateUpdate';
 import Schools from './components/Schools';
-import CreateStudent from './components/CreateStudent';
+import SchoolCreateUpdate from './components/SchoolCreateUpdate';
 
 class App extends Component {
   componentDidMount() {
@@ -27,19 +27,18 @@ class App extends Component {
 
             <Route exact path="/" render={() => <img src="../dist/images/avenueq-monsters.jpg" id="homeImg"></img>} />
 
-            <Route exact path="/students" component={Students} />
             <Route exact path="/schools" component={Schools} />
-
             <Switch>
-              <Route path="/schools/create" component={School} />
-              <Route path="/schools/:id" component={School} />
+              <Route path="/schools/create" component={({ history }) => <SchoolCreateUpdate history={history} />} />
+
+              <Route path="/schools/:id" component={({ history, match }) => <SchoolCreateUpdate history={history} id={match.params.id} />} />
             </Switch>
 
             <Route path="/students/:filter?" component={({ match }) => <Students filter={match.params.filter} />} />
-
             <Switch>
-              <Route path="/students/create" component={CreateStudent} />
-              <Route path="/students/:id" component={CreateStudent} />
+              <Route path="/students/create" component={({ history }) => <StudentCreateUpdate history={history} />} />
+
+              <Route path="/students/:id" component={({ history, match }) => <StudentCreateUpdate history={history} id={match.params.id} />} />
             </Switch>
 
           </div>

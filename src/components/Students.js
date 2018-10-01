@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Container, ListGroup, ListGroupItem, Badge, Button } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 
 import { deleteStudent, createStudent } from '../reducers/students';
 import { selected, matchSchool, enrolled } from '../selectors';
@@ -10,7 +10,6 @@ import { selected, matchSchool, enrolled } from '../selectors';
 class Students extends Component {
   render() {
     const { students, schools, deleteStudent, filter } = this.props;
-
     return (
       <div>
         <h1>Students</h1>
@@ -38,12 +37,12 @@ class Students extends Component {
                 return (
                   <ListGroupItem key={student.id}>
 
-                    <Link to={`/students/${student.id}`}>
+                    <Link to={`/students/${student.id}`} replace>
                       {student.last}, {student.first}
                     </Link>
 
                     <span className='floatRight'>
-                      <Link to={`/schools/${student.schoolId}`}>{matchSchool(schools, student.schoolId)}</Link>
+                      <Link to={`/schools/${student.schoolId}`}>{matchSchool(schools, student.schoolId) || ''}</Link>
 
                       <Button color='danger' onClick={() => deleteStudent(student)}>X</Button>
                     </span>

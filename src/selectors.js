@@ -1,5 +1,5 @@
 //_______________________________________________________________
-//for NavBar.js
+//for NavBar.js,
 export const currentNav = (value, path, fuzzy = false) => {
   let style = {};
   value === path || (fuzzy && path.indexOf(value) === 0) ?
@@ -8,7 +8,7 @@ export const currentNav = (value, path, fuzzy = false) => {
 }
 
 //_______________________________________________________________
-//for Students.js
+//for Students.js,
 export const selected = (value, filter) => value === filter ? 'success' : 'secondary';
 
 export const matchSchool = (schools, schoolId) => {
@@ -32,4 +32,7 @@ export const enrolled = (students, filter = undefined) => {
 }
 
 //_______________________________________________________________
-//for
+//for SchoolCreateUpdate.js, StudentCreateUpdate.js
+export const giveMeOne = (collection, id) => {
+  return collection.find(item => item.id === id * 1)
+}

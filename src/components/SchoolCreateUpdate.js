@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 import { createSchool, updateSchool } from '../reducers/schools';
-import { findSchool } from '../selectors';
+import { giveMeOne } from '../selectors';
 
 class SchoolCreateUpdate extends Component {
   constructor({ school }) {
@@ -34,19 +35,18 @@ class SchoolCreateUpdate extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    if (this.props.id === undefined) {
-      this.props.createSchool({
-        name: this.state.name,
-        address: this.state.address,
-        description: this.state.description,
-      })
+    const { id, createSchool, updateSchool } = this.props;
+    let school = {
+      name: this.state.name,
+      address: this.state.address,
+      description: this.state.description,
+    }
+
+    if (id === undefined) {
+      createSchool(school)
     } else {
-      this.props.updateSchool({
-        id: this.props.id,
-        name: this.state.name,
-        address: this.state.address,
-        description: this.state.description,
-      })
+      school.id = id;
+      updateSchool(school)
     }
 
     this.setState({
@@ -69,6 +69,10 @@ class SchoolCreateUpdate extends Component {
         <h1>{action} School</h1>
 
         <Container>
+          <Link to='/schools' replace>
+            <Button color='primary'>Back</Button>
+          </Link>
+
           <Form onSubmit={handleSubmit}>
             <FormGroup>
               <Label for='name'>Name</Label>
@@ -120,10 +124,9 @@ class SchoolCreateUpdate extends Component {
 };
 
 //_______________________________________________________________
-const mapStateToProps = ({ schools, }, { id, history, }) => ({
+const mapStateToProps = ({ schools, }, { id, }) => ({
   schools,
-  school: findSchool(schools, id),
-  history,
+  school: giveMeOne(schools, id),
 })
 
 const mapDispatchToProps = dispatch => ({

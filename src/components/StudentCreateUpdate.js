@@ -1,34 +1,56 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
-import { createStudent } from '../reducers/students';
+import { createStudent, updateStudent } from '../reducers/students';
+import { giveMeOne } from '../selectors';
 
-class CreateStudent extends Component {
-  constructor({ props }) {
+class StudentCreateUpdate extends Component {
+  constructor({ student }) {
     super();
     this.state = {
-      first: '',
-      last: '',
-      gpa: '',
-      schoolId: '',
+      first: student ? student.name : '',
+      last: student ? student.last : '',
+      gpa: student ? student.gpa : '',
+      schoolId: student ? student.schoolId : '',
     }
     this.handleChange = this.handleChange.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) { this.setState({ [e.target.name]: e.target.value, }) };
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.student && this.props.student) {
+      this.setState({
+        first: this.props.student.first,
+        last: this.props.student.last,
+        gpa: this.props.student.gpa,
+        schoolId: this.props.student.gpa,
+      })
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
-    this.props.createStudent({
+    const { id, createStudent, updateStudent } = this.props;
+    let student = {
       first: this.state.first,
       last: this.state.last,
       gpa: this.state.gpa,
       schoolId: this.state.schoolId,
-    });
+    }
+
+    if (id === undefined) {
+      createStudent(student)
+    } else {
+      student.id = id;
+      updateStudent(student)
+    }
 
     this.setState({
       first: '',
@@ -40,13 +62,20 @@ class CreateStudent extends Component {
 
   render() {
     const { first, last, gpa, schoolId } = this.state;
-    const { schools } = this.props;
+    const { schools, id } = this.props;
     const { handleChange, handleSubmit } = this;
+    const disabled = !first || !last || !gpa;
+    const action = id ? 'Edit' : 'Add';
+
     return (
       <div>
-        <h1>Add Student</h1>
+        <h1>{action} Student</h1>
 
         <Container>
+          <Link to='/students' replace>
+            <Button color='primary'>Back</Button>
+          </Link>
+
           <Form onSubmit={handleSubmit}>
             <FormGroup>
               <Label for='first'>First</Label>
@@ -102,7 +131,7 @@ class CreateStudent extends Component {
               </Input>
             </FormGroup>
 
-            <Button color='success' disabled={!first || !last || !gpa}
+            <Button color='success' disabled={disabled}
             >Submit</Button>
 
           </Form>
@@ -113,16 +142,15 @@ class CreateStudent extends Component {
 };
 
 //_______________________________________________________________
-const mapStateToProps = ({ schools, students }) => {
-
-  return {
-    schools,
-    students,
-  }
-}
+const mapStateToProps = ({ students, schools, }, { id }) => ({
+  students,
+  student: giveMeOne(students, id),
+  schools,
+})
 
 const mapDispatchToProps = dispatch => ({
   createStudent: (student) => dispatch(createStudent(student)),
+  updateStudent: (student) => dispatch(updateStudent(student)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateStudent);
+export default connect(mapStateToProps, mapDispatchToProps)(StudentCreateUpdate);
