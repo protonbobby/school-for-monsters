@@ -135,7 +135,9 @@ class StudentCreateUpdate extends Component {
             >Submit</Button>
 
             <span className='floatRight'>
-              <Button disabled={!this.props.id} color='danger' onClick={() => deleteStudent(student)}>Delete</Button>
+              <Button disabled={!this.props.id} color='danger' onClick={() => {
+                if (confirm('Delete Student?')) { deleteStudent(student) }
+              }}>Delete</Button>
             </span>
 
           </Form>

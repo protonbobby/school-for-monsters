@@ -116,13 +116,15 @@ class SchoolCreateUpdate extends Component {
             >Save</Button>
 
             <span className='floatRight'>
-              <Button disabled={!this.props.id} color='danger' onClick={() => deleteSchool(school)}>Delete</Button>
+              <Button disabled={!this.props.id} color='danger' onClick={() => {
+                if (confirm('Delete School?')) { deleteSchool(school) }
+              }}>Delete</Button>
             </span>
 
           </Form>
         </Container>
 
-      </div>
+      </div >
     )
   };
 };

@@ -25,7 +25,7 @@ class App extends Component {
 
             <Route component={({ location }) => <NavBar path={location.pathname} />} />
 
-            <Route exact path="/" render={() => <img src="../dist/images/avenueq-monsters.jpg" id="homeImg"></img>} />
+            <Route exact path="/" render={() => <img src="../dist/images/monsterPNG.png" id="homeImg"></img>} />
 
             <Route exact path="/schools" component={Schools} />
             <Switch>
