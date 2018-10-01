@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
-import { createSchool, updateSchool } from '../reducers/schools';
+import { deleteSchool, createSchool, updateSchool } from '../reducers/schools';
 import { giveMeOne } from '../selectors';
 
 class SchoolCreateUpdate extends Component {
@@ -60,10 +60,10 @@ class SchoolCreateUpdate extends Component {
 
   render() {
     const { name, address, description } = this.state;
-    const { id } = this.props;
+    const { school, deleteSchool } = this.props;
     const { handleChange, handleSubmit } = this;
     const disabled = !name || !address || !description;
-    const action = id ? 'Edit' : 'Add';
+    const action = this.props.id ? 'Edit' : 'Add';
     return (
       <div>
         <h1>{action} School</h1>
@@ -115,6 +115,10 @@ class SchoolCreateUpdate extends Component {
               disabled={disabled}
             >Save</Button>
 
+            <span className='floatRight'>
+              <Button disabled={!this.props.id} color='danger' onClick={() => deleteSchool(school)}>Delete</Button>
+            </span>
+
           </Form>
         </Container>
 
@@ -124,12 +128,13 @@ class SchoolCreateUpdate extends Component {
 };
 
 //_______________________________________________________________
-const mapStateToProps = ({ schools, }, { id, }) => ({
+const mapStateToProps = ({ schools }, { id, }) => ({
   schools,
   school: giveMeOne(schools, id),
 })
 
 const mapDispatchToProps = dispatch => ({
+  deleteSchool: (school) => dispatch(deleteSchool(school)),
   createSchool: (school) => dispatch(createSchool(school)),
   updateSchool: (school) => dispatch(updateSchool(school)),
 });

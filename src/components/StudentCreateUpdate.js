@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
-import { createStudent, updateStudent } from '../reducers/students';
+import { deleteStudent, createStudent, updateStudent } from '../reducers/students';
 import { giveMeOne } from '../selectors';
 
 class StudentCreateUpdate extends Component {
@@ -62,10 +62,10 @@ class StudentCreateUpdate extends Component {
 
   render() {
     const { first, last, gpa, schoolId } = this.state;
-    const { schools, id } = this.props;
+    const { schools, student, deleteStudent } = this.props;
     const { handleChange, handleSubmit } = this;
     const disabled = !first || !last || !gpa;
-    const action = id ? 'Edit' : 'Add';
+    const action = this.props.id ? 'Edit' : 'Add';
 
     return (
       <div>
@@ -134,6 +134,10 @@ class StudentCreateUpdate extends Component {
             <Button color='success' disabled={disabled}
             >Submit</Button>
 
+            <span className='floatRight'>
+              <Button disabled={!this.props.id} color='danger' onClick={() => deleteStudent(student)}>Delete</Button>
+            </span>
+
           </Form>
         </Container>
       </div>
@@ -149,6 +153,7 @@ const mapStateToProps = ({ students, schools, }, { id }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  deleteStudent: (student) => dispatch(deleteStudent(student)),
   createStudent: (student) => dispatch(createStudent(student)),
   updateStudent: (student) => dispatch(updateStudent(student)),
 })
