@@ -124,14 +124,29 @@ class SchoolCreateUpdate extends Component {
           </Form>
         </Container>
 
-        <h2>Students</h2>
-        <Container>
-          <ListGroup>
-            {school.students.map(student => {
-              return <ListGroupItem key={student.id}>{student.last}, {student.first}</ListGroupItem>
-            })}
-          </ListGroup>
-        </Container>
+        {
+          this.props.id ?
+            <div>
+              <h2>Students</h2>
+              <Container>
+                <ListGroup>
+                  {school.students.map(student => {
+                    return <ListGroupItem key={student.id}>
+                      <Link to={`/students/${student.id}`} replace>
+                        {student.last}, {student.first}
+                      </Link>
+
+                      <span className='floatRight'>
+                        <Button disabled={!this.props.id} color='warning' onClick={() => { if (confirm('Unenroll student?')) { href = '#' } }
+                        }>Unenroll</Button>
+                      </span>
+                      <span className='floatRight'>GPA: ({student.gpa})</span>
+                    </ListGroupItem>
+                  })}
+                </ListGroup>
+              </Container>
+            </div> : null
+        }
 
       </div >
     )
