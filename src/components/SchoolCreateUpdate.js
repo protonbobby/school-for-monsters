@@ -160,10 +160,10 @@ const mapStateToProps = ({ schools, students }, { id, }) => ({
   students,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, { history }) => ({
   deleteSchool: (school) => dispatch(deleteSchool(school)),
   createSchool: (school) => dispatch(createSchool(school)),
-  updateSchool: (school) => dispatch(updateSchool(school)),
+  updateSchool: (school) => dispatch(updateSchool(school, history)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SchoolCreateUpdate)

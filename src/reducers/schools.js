@@ -49,7 +49,7 @@ export const loadSchools = () => {
   };
 };
 
-export const deleteSchool = school => {
+export const deleteSchool = (school) => {
   return dispatch => {
     axios.delete(`/api/schools/${school.id}`)
       .then(res => res.data)
@@ -58,7 +58,7 @@ export const deleteSchool = school => {
   };
 };
 
-export const createSchool = school => {
+export const createSchool = (school) => {
   return dispatch => {
     axios.post('/api/schools', school)
       .then(res => res.data)
@@ -67,11 +67,12 @@ export const createSchool = school => {
   };
 };
 
-export const updateSchool = school => {
+export const updateSchool = (school, history) => {
   return dispatch => {
     axios.put(`/api/schools/${school.id}`, school)
       .then(res => res.data)
       .then(school => dispatch(_updateSchool(school)))
+      .then(() => history.push('/schools'))
       .catch(e => console.log(e));
   };
 };

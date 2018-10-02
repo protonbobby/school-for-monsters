@@ -7,6 +7,8 @@ import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { deleteStudent, createStudent, updateStudent } from '../reducers/students';
 import { giveMeOne } from '../selectors';
 
+
+
 class StudentCreateUpdate extends Component {
   constructor({ student }) {
     super();
@@ -14,7 +16,7 @@ class StudentCreateUpdate extends Component {
       first: student ? student.name : '',
       last: student ? student.last : '',
       gpa: student ? student.gpa : '',
-      schoolId: student ? student.schoolId : '',
+      schoolId: student ? student.schoolId : undefined,
     }
     this.handleChange = this.handleChange.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
@@ -122,7 +124,7 @@ class StudentCreateUpdate extends Component {
                 onChange={handleChange}
                 type='select'
                 name='schoolId'>
-                <option >Not Enrolled</option>
+                <option key={undefined}>Not Enrolled</option>
                 {
                   schools.map(school => {
                     return <option key={school.id} value={school.id}>{school.name}</option>
@@ -154,10 +156,10 @@ const mapStateToProps = ({ students, schools, }, { id }) => ({
   schools,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, { history }) => ({
   deleteStudent: (student) => dispatch(deleteStudent(student)),
   createStudent: (student) => dispatch(createStudent(student)),
-  updateStudent: (student) => dispatch(updateStudent(student)),
+  updateStudent: (student) => dispatch(updateStudent(student, history)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentCreateUpdate);

@@ -67,11 +67,12 @@ export const createStudent = (student) => {
   };
 };
 
-export const updateStudent = (student) => {
+export const updateStudent = (student, history) => {
   return dispatch => {
     return axios.put(`/api/students/${student.id}`, student)
       .then(res => res.data)
       .then(student => dispatch(_updateStudent(student)))
+      .then(() => history.push('/students'))
       .catch(e => console.log(e));
   };
 };

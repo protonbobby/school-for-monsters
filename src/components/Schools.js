@@ -4,9 +4,16 @@ import { Link } from 'react-router-dom';
 
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 
-import { createSchool } from '../reducers/schools';
+import { loadSchools, createSchool } from '../reducers/schools';
 
 class Schools extends Component {
+  // componentDidUpdate(prevProps) {
+  //   console.log('------>', prevProps, 'xxxxx', this.props)
+  //   if (prevProps.data !== this.props.data) {
+  //     this.props.loadSchools();
+  //   }
+  // }
+
   render() {
     const { schools } = this.props;
     return (
@@ -42,7 +49,8 @@ const mapStateToProps = ({ schools, students }) => ({
   students,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
+  loadSchools: () => dispatch(loadSchools()),
   createSchool: (school) => dispatch(createSchool(school)),
 });
 
