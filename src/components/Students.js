@@ -34,6 +34,7 @@ class Students extends Component {
           <ListGroup>
             {
               students.map(student => {
+                console.log('----.>', student)
                 return (
                   <ListGroupItem key={student.id}>
 
@@ -42,7 +43,7 @@ class Students extends Component {
                     </Link>
 
                     <span className='floatRight'>
-                      <Link to={`/schools/${student.schoolId}`}>{matchSchool(schools, student.schoolId) || ''}</Link>
+                      <Link to={`/schools/${student.schoolId}`}>{student.schoolId === null ? "Not Enrolled" : matchSchool(schools, student.schoolId)}</Link>
                     </span>
 
                   </ListGroupItem>

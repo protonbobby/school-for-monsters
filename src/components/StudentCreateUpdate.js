@@ -47,7 +47,7 @@ class StudentCreateUpdate extends Component {
       schoolId: this.state.schoolId,
     }
 
-    if (id === undefined) {
+    if (id === 0) {
       createStudent(student)
     } else {
       student.id = id;
@@ -68,6 +68,11 @@ class StudentCreateUpdate extends Component {
     const { handleChange, handleSubmit } = this;
     const disabled = !first || !last || !gpa;
     const action = this.props.id ? 'Edit' : 'Add';
+    console.log()
+
+    // if(this.state){
+    //   return null;
+    // }
 
     return (
       <div>
@@ -124,7 +129,7 @@ class StudentCreateUpdate extends Component {
                 onChange={handleChange}
                 type='select'
                 name='schoolId'>
-                <option key={undefined}>Not Enrolled</option>
+                <option key={0}>Not Enrolled</option>
                 {
                   schools.map(school => {
                     return <option key={school.id} value={school.id}>{school.name}</option>
