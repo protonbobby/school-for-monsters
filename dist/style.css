@@ -3,16 +3,20 @@
 }
 
 body {
-  margin: 10px;
+  margin: 10;
+  background-image: URL(https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fpre05.deviantart.net%2Fbb0d%2Fth%2Fpre%2Ff%2F2006%2F357%2F7%2F6%2Fmonster_background_by_vector_kid.jpg&f=1)
 }
 
 #title{
+  padding-top: .5em;
   font-family: 'Kalam';
-  font-size: 30px;
+  font-size: 40;
 }
 
 h1, h2 {
+  padding: .25em;
   text-align: center;
+  background-color: rgba(255,255,255,.5)
 }
 
 .nav {
@@ -21,7 +25,7 @@ h1, h2 {
 }
 
 #homeImg {
-  width: 500px;
+  width: 500;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -29,8 +33,17 @@ h1, h2 {
 
 .floatRight {
   float: right;
+  color: inherit;
+}
+
+.fieldNames{
+  background-color: black;
+  color: white;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 FOOTER {
   margin-top: 9em;
+  text-align: center;
 }

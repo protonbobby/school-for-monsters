@@ -7,15 +7,8 @@ import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { loadSchools, createSchool } from '../reducers/schools';
 
 class Schools extends Component {
-  // componentDidUpdate(prevProps) {
-  //   console.log('------>', prevProps, 'xxxxx', this.props)
-  //   if (prevProps.data !== this.props.data) {
-  //     this.props.loadSchools();
-  //   }
-  // }
-
   render() {
-    const { schools } = this.props;
+    const { schools, students, } = this.props;
     return (
       <div>
         <h1>Schools</h1>
@@ -26,12 +19,20 @@ class Schools extends Component {
           </Link>
 
           <ListGroup>
+            <ListGroupItem className='fieldNames'>
+              Schools
+              <span className='floatRight' >Students</span>
+            </ListGroupItem>
             {
               schools.map(school => {
                 return (
                   <ListGroupItem key={school.id}>
                     <Link to={`/schools/${school.id}`} replace>{school.name} </Link>
-                    {/* ({school.students.length || 0}) */}
+                    <span className='floatRight'>
+                      ({students
+                        .filter(student => student.schoolId === school.id)
+                        .length})
+                      </span>
                   </ListGroupItem>
                 )
               })

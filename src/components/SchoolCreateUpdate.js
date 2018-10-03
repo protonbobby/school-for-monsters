@@ -55,6 +55,11 @@ class SchoolCreateUpdate extends Component {
     const { handleChange, handleSubmit } = this;
     const disabled = !name || !address || !description;
     const action = this.props.id ? 'Edit' : 'Add';
+
+    if (!this.state) {
+      return null;
+    }
+
     return (
       <div>
         <h1>{action} School</h1>
@@ -120,29 +125,37 @@ class SchoolCreateUpdate extends Component {
           </Form>
         </Container>
 
-        {/* {
+        {
           this.props.id ?
             <div>
               <h2>Students</h2>
               <Container>
                 <ListGroup>
-                  {school.students.map(student => {
-                    return <ListGroupItem key={student.id}>
-                      <Link to={`/students/${student.id}`} replace>
-                        {student.last}, {student.first}
-                      </Link>
+                  {
+                    students
+                      .filter(student => student.schoolId === school.id)
+                      .map(student => {
+                        return (
+                          <ListGroupItem key={student.id}>
+                            <Link to={`/students/${student.id}`} replace>
+                              {student.last}, {student.first}
+                            </Link>
 
-                      <span className='floatRight'>
-                        <Button disabled={!this.props.id} color='warning' onClick={() => { if (confirm('Unenroll student?')) { href = '#' } }
-                        }>Unenroll</Button>
-                      </span>
-                      <span className='floatRight'>GPA: ({student.gpa})</span>
-                    </ListGroupItem>
-                  })}
+                            <span className='floatRight'>
+                              <Button
+                                disabled={!this.props.id}
+                                color='warning'
+                                onClick={() => { if (confirm('Unenroll student?')) { href = '#' } }
+                                }>Unenroll</Button>
+                            </span>
+                          </ListGroupItem>
+                        )
+                      })
+                  }
                 </ListGroup>
               </Container>
             </div> : null
-        } */}
+        }
 
       </div >
     )

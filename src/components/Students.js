@@ -18,6 +18,10 @@ class Students extends Component {
             <Button color="primary">Add Student</Button>
           </Link>
 
+          <ListGroupItem className='fieldNames'>
+            Students
+              <span className='floatRight' >School</span>
+          </ListGroupItem>
           <ListGroup>
             {
               students.map(student => {
