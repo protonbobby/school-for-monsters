@@ -35,7 +35,7 @@ const studentsReducer = (state = studentsInitialState, action) => {
     case CREATE_STUDENT:
       return [...state, action.student]
     case UPDATE_STUDENT:
-      return state.filter(student => student.id !== action.student.id ? student : action.student);
+      return state.map(student => student.id === action.student.id ? action.student : student);
     default: return state;
   };
 };
@@ -49,11 +49,12 @@ export const loadStudents = () => {
   };
 };
 
-export const deleteStudent = (student) => {
+export const deleteStudent = (student, history) => {
   return dispatch => {
     axios.delete(`/api/students/${student.id}`)
       .then(res => res.data)
       .then(() => dispatch(_deleteStudent(student)))
+      .then(() => history.push('/students'))
       .catch(e => console.log(e));
   };
 };

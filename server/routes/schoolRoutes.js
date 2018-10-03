@@ -5,16 +5,13 @@ const Student = require('../db/Student');
 router.get('/', (req, res, next) => {
   School.findAll({
     order: [['name', 'ASC']],
-    include: [Student],
   })
     .then(schools => res.send(schools))
     .catch(next)
 });
 
 router.get('/:id', (req, res, next) => {
-  School.findById(req.params.id, {
-    include: [Student]
-  })
+  School.findById(req.params.id)
     .then(school => res.send(school))
     .catch(next)
 });

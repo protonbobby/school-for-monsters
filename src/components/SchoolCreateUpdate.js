@@ -34,7 +34,6 @@ class SchoolCreateUpdate extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
     const { id, createSchool, updateSchool } = this.props;
     let school = {
       name: this.state.name,
@@ -54,8 +53,7 @@ class SchoolCreateUpdate extends Component {
       address: '',
       description: '',
     })
-
-    this.props.history.push('/schools');
+      .then(() => this.props.history.push('/schools'))
   }
 
   render() {
@@ -130,7 +128,7 @@ class SchoolCreateUpdate extends Component {
               <h2>Students</h2>
               <Container>
                 <ListGroup>
-                  {school.students.map(student => {
+                  {/* {school.students.map(student => {
                     return <ListGroupItem key={student.id}>
                       <Link to={`/students/${student.id}`} replace>
                         {student.last}, {student.first}
@@ -142,7 +140,7 @@ class SchoolCreateUpdate extends Component {
                       </span>
                       <span className='floatRight'>GPA: ({student.gpa})</span>
                     </ListGroupItem>
-                  })}
+                  })} */}
                 </ListGroup>
               </Container>
             </div> : null

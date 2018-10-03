@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 
 import { createStudent } from '../reducers/students';
-import { selected, matchSchool, enrolled } from '../selectors';
+import { selected, giveMeOne, enrolled } from '../selectors';
 
 class Students extends Component {
   render() {
@@ -19,22 +19,9 @@ class Students extends Component {
             <Button color="primary">Add Student</Button>
           </Link>
 
-          <Link to='/students/' replace>
-            <Button color={selected(undefined, filter)}>All</Button>
-          </Link>
-
-          <Link to='/students/enrolled' replace>
-            <Button color={selected('enrolled', filter)}>Enrolled</Button>
-          </Link>
-
-          <Link to='/students/unenrolled' replace>
-            <Button color={selected('unenrolled', filter)}>Unenrolled</Button>
-          </Link>
-
           <ListGroup>
             {
               students.map(student => {
-                console.log('----.>', student)
                 return (
                   <ListGroupItem key={student.id}>
 
@@ -43,7 +30,9 @@ class Students extends Component {
                     </Link>
 
                     <span className='floatRight'>
-                      <Link to={`/schools/${student.schoolId}`}>{student.schoolId === null ? "Not Enrolled" : matchSchool(schools, student.schoolId)}</Link>
+                      <Link to={`/schools/${student.schoolId}`} replace>{
+                        'Hi'
+                      }</Link>
                     </span>
 
                   </ListGroupItem>

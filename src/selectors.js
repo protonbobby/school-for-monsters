@@ -13,7 +13,6 @@ export const selected = (value, filter) => value === filter ? 'success' : 'secon
 
 export const matchSchool = (schools, schoolId) => {
   const school = schools.find(school => {
-    console.log(school)
     return school.id === schoolId
   })
   return school.name

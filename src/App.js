@@ -28,17 +28,14 @@ class App extends Component {
             <Route exact path="/" render={() => <img src="../dist/images/monsterPNG.png" id="homeImg"></img>} />
 
             <Route exact path="/schools" component={Schools} />
+
+            <Route exact path="/students" component={Students} />
+
             <Switch>
               <Route path="/schools/create" component={({ history }) => <SchoolCreateUpdate history={history} />} />
-
-              <Route path="/schools/:id" component={({ history, match }) => <SchoolCreateUpdate history={history} id={match.params.id} />} />
-            </Switch>
-
-            <Route path="/students/:filter?" component={({ match }) => <Students filter={match.params.filter} />} />
-            <Switch>
+              <Route path="/schools/:id" component={({ history, match }) => <SchoolCreateUpdate history={history} id={match.params.id * 1} />} />
               <Route path="/students/create" component={({ history }) => <StudentCreateUpdate history={history} />} />
-
-              <Route path="/students/:id" component={({ history, match }) => <StudentCreateUpdate history={history} id={match.params.id} />} />
+              <Route path="/students/:id" component={({ history, match }) => <StudentCreateUpdate history={history} id={match.params.id * 1} />} />
             </Switch>
 
           </div>

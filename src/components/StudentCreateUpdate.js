@@ -5,21 +5,17 @@ import { Link } from 'react-router-dom';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 import { deleteStudent, createStudent, updateStudent } from '../reducers/students';
-import { giveMeOne } from '../selectors';
-
-
 
 class StudentCreateUpdate extends Component {
   constructor({ student }) {
     super();
     this.state = {
-      first: student ? student.name : '',
+      first: student ? student.first : '',
       last: student ? student.last : '',
-      gpa: student ? student.gpa : '',
-      schoolId: student ? student.schoolId : undefined,
+      gpa: student ? student.gpa : 2.0,
+      schoolId: student ? student.schoolId : '',
     }
     this.handleChange = this.handleChange.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -31,7 +27,7 @@ class StudentCreateUpdate extends Component {
         first: this.props.student.first,
         last: this.props.student.last,
         gpa: this.props.student.gpa,
-        schoolId: this.props.student.gpa,
+        schoolId: this.props.student.schoolId,
       })
     }
   }
@@ -39,27 +35,21 @@ class StudentCreateUpdate extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const { id, createStudent, updateStudent } = this.props;
-    let student = {
+    const _student = {
       first: this.state.first,
       last: this.state.last,
       gpa: this.state.gpa,
       schoolId: this.state.schoolId,
     }
 
-    if (id === 0) {
-      createStudent(student)
+    if (!this.props.id) {
+      this.props.createStudent(_student)
     } else {
-      student.id = id;
-      updateStudent(student)
+      _student['id'] = this.props.id;
+      this.props.updateStudent(_student)
     }
 
-    this.setState({
-      first: '',
-      last: '',
-      gpa: '',
-      schoolId: '',
-    })
+    this.props.history.push('/students')
   }
 
   render() {
@@ -68,11 +58,10 @@ class StudentCreateUpdate extends Component {
     const { handleChange, handleSubmit } = this;
     const disabled = !first || !last || !gpa;
     const action = this.props.id ? 'Edit' : 'Add';
-    console.log()
 
-    // if(this.state){
-    //   return null;
-    // }
+    if (!this.state) {
+      return null;
+    }
 
     return (
       <div>
@@ -129,7 +118,7 @@ class StudentCreateUpdate extends Component {
                 onChange={handleChange}
                 type='select'
                 name='schoolId'>
-                <option key={0}>Not Enrolled</option>
+                <option key=''>Not Enrolled</option>
                 {
                   schools.map(school => {
                     return <option key={school.id} value={school.id}>{school.name}</option>
@@ -155,14 +144,16 @@ class StudentCreateUpdate extends Component {
 };
 
 //_______________________________________________________________
-const mapStateToProps = ({ students, schools, }, { id }) => ({
-  students,
-  student: giveMeOne(students, id),
-  schools,
-})
+const mapStateToProps = ({ students, schools, }, { id }) => {
+  const student = students.find(student => student.id === id);
+  return {
+    student,
+    schools,
+  }
+}
 
 const mapDispatchToProps = (dispatch, { history }) => ({
-  deleteStudent: (student) => dispatch(deleteStudent(student)),
+  deleteStudent: (student) => dispatch(deleteStudent(student, history)),
   createStudent: (student) => dispatch(createStudent(student)),
   updateStudent: (student) => dispatch(updateStudent(student, history)),
 })

@@ -31,7 +31,7 @@ class Schools extends Component {
                 return (
                   <ListGroupItem key={school.id}>
                     <Link to={`/schools/${school.id}`} replace>{school.name} </Link>
-                    ({school.students.length || 0})
+                    {/* ({school.students.length || 0}) */}
                   </ListGroupItem>
                 )
               })
