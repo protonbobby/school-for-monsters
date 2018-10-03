@@ -65,9 +65,9 @@ class StudentCreateUpdate extends Component {
 
     return (
       <div>
-        <h1>{action} Student</h1>
-
         <Container>
+          <h1>{action} Student</h1>
+
           <Link to='/students' replace>
             <Button color='primary'>Back</Button>
           </Link>

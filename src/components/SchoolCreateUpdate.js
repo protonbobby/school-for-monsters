@@ -62,9 +62,9 @@ class SchoolCreateUpdate extends Component {
 
     return (
       <div>
-        <h1>{action} School</h1>
-
         <Container>
+          <h1>{action} School</h1>
+
           <Link to='/schools' replace>
             <Button color='primary'>Back</Button>
           </Link>
@@ -125,11 +125,14 @@ class SchoolCreateUpdate extends Component {
           </Form>
         </Container>
 
+        <br />
+
         {
           this.props.id ?
             <div>
-              <h2>Students</h2>
               <Container>
+                <h2>Enrolled Students</h2>
+
                 <ListGroup>
                   {
                     students
@@ -153,6 +156,34 @@ class SchoolCreateUpdate extends Component {
                       })
                   }
                 </ListGroup>
+
+                <br />
+
+                <ListGroup>
+                  <h2>Unenrolled Students</h2>
+                  {
+                    students
+                      .filter(student => student.schoolId !== school.id)
+                      .map(student => {
+                        return (
+                          <ListGroupItem key={student.id}>
+                            <Link to={`/students/${student.id}`} replace>
+                              {student.last}, {student.first}
+                            </Link>
+
+                            <span className='floatRight'>
+                              <Button
+                                disabled={!this.props.id}
+                                color='warning'
+                                onClick={() => { if (confirm('Enroll student?')) { href = '#' } }
+                                }>Enroll</Button>
+                            </span>
+                          </ListGroupItem>
+                        )
+                      })
+                  }
+                </ListGroup>
+
               </Container>
             </div> : null
         }

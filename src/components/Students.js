@@ -11,9 +11,9 @@ class Students extends Component {
     const { students, schools } = this.props;
     return (
       <div>
-        <h1>Students</h1>
-
         <Container>
+          <h1>Students</h1>
+
           <Link to='/students/create' replace>
             <Button color="primary">Add Student</Button>
           </Link>
