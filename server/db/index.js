@@ -25,7 +25,7 @@ const syncAndSeed = () => {
           description: 'Attend if you dare!',
         }),
         School.create({
-          name: 'Not-so-fresh Princes of Bel Air',
+          name: 'Defense of the Dark Arts',
           address: '251 N Bristol Ave',
           description: 'It\'s not unusual!',
         }),
@@ -34,7 +34,7 @@ const syncAndSeed = () => {
           first: 'Trekky',
           last: 'Monster',
           gpa: 1.0,
-          schoolId: 2,
+          schoolId: null,
         }),
         Student.create({
           first: 'Kate',
