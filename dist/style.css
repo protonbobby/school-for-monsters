@@ -1,0 +1,36 @@
+* {
+  color: purple;
+}
+
+body {
+  margin: 10px;
+}
+
+#title{
+  font-family: 'Kalam';
+  font-size: 30px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+#homeImg {
+  width: 500px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.floatRight {
+  float: right;
+}
+
+FOOTER {
+  margin-top: 9em;
+}

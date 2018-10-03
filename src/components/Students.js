@@ -5,11 +5,10 @@ import { Link } from 'react-router-dom';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 
 import { createStudent } from '../reducers/students';
-import { selected, giveMeOne, enrolled } from '../selectors';
 
 class Students extends Component {
   render() {
-    const { students, schools, filter } = this.props;
+    const { students, schools } = this.props;
     return (
       <div>
         <h1>Students</h1>
@@ -22,6 +21,8 @@ class Students extends Component {
           <ListGroup>
             {
               students.map(student => {
+                const findSchool = schools.find(school => school.id === student.schoolId);
+
                 return (
                   <ListGroupItem key={student.id}>
 
@@ -30,9 +31,11 @@ class Students extends Component {
                     </Link>
 
                     <span className='floatRight'>
-                      <Link to={`/schools/${student.schoolId}`} replace>{
-                        'Hi'
-                      }</Link>
+                      <Link to={`/schools/${student.schoolId}`} replace>
+                        {
+                          findSchool ? findSchool['name'] : 'Not Enrolled'
+                        }
+                      </Link>
                     </span>
 
                   </ListGroupItem>
@@ -47,11 +50,7 @@ class Students extends Component {
 }
 
 //_______________________________________________________________
-const mapStateToProps = ({ students, schools }, { filter }) => ({
-  students: enrolled(students, filter),
-  schools,
-  filter,
-})
+const mapStateToProps = ({ students, schools, }) => ({ students, schools, })
 
 const mapDispatchToProps = dispatch => ({
   createStudent: (student) => dispatch(createStudent(student)),

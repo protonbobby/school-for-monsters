@@ -44,12 +44,12 @@ class StudentCreateUpdate extends Component {
 
     if (!this.props.id) {
       this.props.createStudent(_student)
+        .then(() => this.props.history.push('/students'))
     } else {
-      _student['id'] = this.props.id;
+      _student['id'] = this.props.student.id;
       this.props.updateStudent(_student)
+        .then(() => this.props.history.push('/students'))
     }
-
-    this.props.history.push('/students')
   }
 
   render() {
@@ -107,7 +107,7 @@ class StudentCreateUpdate extends Component {
                 min='0'
                 max='4.0'
                 name='gpa'
-                placeholder='3.0' />
+                placeholder='2.0' />
             </FormGroup>
 
             <FormGroup>
@@ -118,7 +118,7 @@ class StudentCreateUpdate extends Component {
                 onChange={handleChange}
                 type='select'
                 name='schoolId'>
-                <option key=''>Not Enrolled</option>
+                <option value=''>Not Enrolled</option>
                 {
                   schools.map(school => {
                     return <option key={school.id} value={school.id}>{school.name}</option>
@@ -131,7 +131,7 @@ class StudentCreateUpdate extends Component {
             >Submit</Button>
 
             <span className='floatRight'>
-              <Button disabled={!this.props.id} color='danger' onClick={() => {
+              <Button style={!this.props.id ? { display: 'none' } : null} color='danger' onClick={() => {
                 if (confirm('Delete Student?')) { deleteStudent(student) }
               }}>Delete</Button>
             </span>
