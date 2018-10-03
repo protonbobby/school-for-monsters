@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Container, Form, FormGroup, Label, Input, Button, ListGroup, ListGroupItem } from 'reactstrap';
 
 import { deleteSchool, createSchool, updateSchool } from '../reducers/schools';
-import { giveMeOne } from '../selectors';
 
 class SchoolCreateUpdate extends Component {
   constructor({ school }) {
@@ -16,7 +15,6 @@ class SchoolCreateUpdate extends Component {
       description: school ? school.description : '',
     }
     this.handleChange = this.handleChange.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   };
 
@@ -34,26 +32,21 @@ class SchoolCreateUpdate extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { id, createSchool, updateSchool } = this.props;
-    let school = {
+
+    const _school = {
       name: this.state.name,
       address: this.state.address,
       description: this.state.description,
     }
 
-    if (id === undefined) {
-      createSchool(school)
+    if (!this.props.id) {
+      this.props.createSchool(_school)
     } else {
-      school.id = id;
-      updateSchool(school)
+      _school['id'] = this.props.school.id;
+      this.props.updateSchool(_school)
     }
 
-    this.setState({
-      name: '',
-      address: '',
-      description: '',
-    })
-      .then(() => this.props.history.push('/schools'))
+    this.props.history.push('/schools')
   }
 
   render() {
@@ -80,7 +73,7 @@ class SchoolCreateUpdate extends Component {
                 onChange={handleChange}
                 type='text'
                 name='name'
-                placeholder='Monterssori School'
+                placeholder='Monsterssori School'
                 autoFocus />
             </FormGroup>
 
@@ -111,24 +104,29 @@ class SchoolCreateUpdate extends Component {
             <Button
               color='success'
               disabled={disabled}
-            >Save</Button>
+            >Save
+            </Button>
 
             <span className='floatRight'>
-              <Button disabled={!this.props.id} color='danger' onClick={() => {
-                if (confirm('Delete School?')) { deleteSchool(school) }
-              }}>Delete</Button>
+              <Button
+                style={!this.props.id ? { display: 'none' } : null}
+                color='danger'
+                onClick={() => {
+                  if (confirm('Delete School?')) { deleteSchool(school) }
+                }}>Delete
+              </Button>
             </span>
 
           </Form>
         </Container>
 
-        {
+        {/* {
           this.props.id ?
             <div>
               <h2>Students</h2>
               <Container>
                 <ListGroup>
-                  {/* {school.students.map(student => {
+                  {school.students.map(student => {
                     return <ListGroupItem key={student.id}>
                       <Link to={`/students/${student.id}`} replace>
                         {student.last}, {student.first}
@@ -140,11 +138,11 @@ class SchoolCreateUpdate extends Component {
                       </span>
                       <span className='floatRight'>GPA: ({student.gpa})</span>
                     </ListGroupItem>
-                  })} */}
+                  })}
                 </ListGroup>
               </Container>
             </div> : null
-        }
+        } */}
 
       </div >
     )
@@ -152,14 +150,17 @@ class SchoolCreateUpdate extends Component {
 };
 
 //_______________________________________________________________
-const mapStateToProps = ({ schools, students }, { id, }) => ({
-  schools,
-  school: giveMeOne(schools, id),
-  students,
-})
+const mapStateToProps = ({ schools, students }, { id, }) => {
+  const school = schools.find(school => school.id === id);
+
+  return {
+    school,
+    students,
+  }
+}
 
 const mapDispatchToProps = (dispatch, { history }) => ({
-  deleteSchool: (school) => dispatch(deleteSchool(school)),
+  deleteSchool: (school) => dispatch(deleteSchool(school, history)),
   createSchool: (school) => dispatch(createSchool(school)),
   updateSchool: (school) => dispatch(updateSchool(school, history)),
 });

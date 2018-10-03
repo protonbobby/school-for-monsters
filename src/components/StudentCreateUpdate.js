@@ -44,12 +44,12 @@ class StudentCreateUpdate extends Component {
 
     if (!this.props.id) {
       this.props.createStudent(_student)
-        .then(() => this.props.history.push('/students'))
     } else {
       _student['id'] = this.props.student.id;
       this.props.updateStudent(_student)
-        .then(() => this.props.history.push('/students'))
     }
+
+    this.props.history.push('/students')
   }
 
   render() {
@@ -127,13 +127,19 @@ class StudentCreateUpdate extends Component {
               </Input>
             </FormGroup>
 
-            <Button color='success' disabled={disabled}
-            >Submit</Button>
+            <Button
+              color='success'
+              disabled={disabled}
+            >Submit
+            </Button>
 
             <span className='floatRight'>
-              <Button style={!this.props.id ? { display: 'none' } : null} color='danger' onClick={() => {
-                if (confirm('Delete Student?')) { deleteStudent(student) }
-              }}>Delete</Button>
+              <Button
+                style={!this.props.id ? { display: 'none' } : null} color='danger'
+                onClick={() => {
+                  if (confirm('Delete Student?')) { deleteStudent(student) }
+                }}>Delete
+              </Button>
             </span>
 
           </Form>
@@ -144,8 +150,9 @@ class StudentCreateUpdate extends Component {
 };
 
 //_______________________________________________________________
-const mapStateToProps = ({ students, schools, }, { id }) => {
+const mapStateToProps = ({ students, schools, }, { id, }) => {
   const student = students.find(student => student.id === id);
+
   return {
     student,
     schools,

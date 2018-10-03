@@ -27,9 +27,9 @@ class App extends Component {
 
             <Route exact path="/" render={() => <img src="../dist/images/monsterPNG.png" id="homeImg"></img>} />
 
-            <Route exact path="/schools" component={Schools} />
+            <Route exact path="/schools" component={Schools} replace />
 
-            <Route exact path="/students" component={Students} />
+            <Route exact path="/students" component={Students} replace />
 
             <Switch>
               <Route path="/schools/create" component={({ history }) => <SchoolCreateUpdate history={history} />} />

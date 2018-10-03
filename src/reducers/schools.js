@@ -35,7 +35,7 @@ const schoolsReducer = (state = schoolsInitialState, action) => {
     case CREATE_SCHOOL:
       return [...state, action.school];
     case UPDATE_SCHOOL:
-      return state.filter(school => school.id !== action.school.id ? school : action.school)
+      return state.map(school => school.id === action.school.id ? action.school : school);
     default: return state;
   };
 };
@@ -49,11 +49,12 @@ export const loadSchools = () => {
   };
 };
 
-export const deleteSchool = (school) => {
+export const deleteSchool = (school, history) => {
   return dispatch => {
     axios.delete(`/api/schools/${school.id}`)
       .then(res => res.data)
       .then(() => dispatch(_deleteSchool(school)))
+      .then(() => history.push('/schools'))
       .catch(e => console.log(e));
   };
 };
