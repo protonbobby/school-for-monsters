@@ -128,7 +128,7 @@ class SchoolCreateUpdate extends Component {
         <br />
 
         {
-          this.props.id ?
+          school && this.props.id ?
             <div>
               <Container>
                 <h2>Enrolled Students</h2>

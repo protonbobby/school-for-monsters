@@ -45,7 +45,7 @@ class StudentCreateUpdate extends Component {
     if (!this.props.id) {
       this.props.createStudent(_student)
     } else {
-      _student['id'] = this.props.student.id;
+      _student['id'] = this.props.id
       this.props.updateStudent(_student)
     }
 
@@ -118,7 +118,7 @@ class StudentCreateUpdate extends Component {
                 onChange={handleChange}
                 type='select'
                 name='schoolId'>
-                <option value=''>Not Enrolled</option>
+                <option key='' value=''>Not Enrolled</option>
                 {
                   schools.map(school => {
                     return <option key={school.id} value={school.id}>{school.name}</option>
