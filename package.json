@@ -34,6 +34,7 @@
   "devDependencies": {},
   "scripts": {
     "postinstall": "npm run webpack",
+    "start": "node server/index.js",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "start:dev": "npm run webpack -- --watch --mode=development & DATABASE_URL=postgres://localhost/monster_db nodemon server/index.js --ignore src/ --ignore dist"
   },

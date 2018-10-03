@@ -125,7 +125,7 @@ class StudentCreateUpdate extends Component {
                 onChange={handleChange}
                 type='select'
                 name='schoolId'>
-                <option value=''>Not Enrolled</option>
+                <option value={null}>Not Enrolled</option>
                 {
                   schools.map(school => {
                     return <option key={school.id} value={school.id}>{school.name}</option>
