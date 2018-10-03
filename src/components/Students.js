@@ -37,7 +37,7 @@ class Students extends Component {
                     <span className='floatRight'>
                       <Link to={`/schools/${student.schoolId}`} replace>
                         {
-                          findSchool ? findSchool['name'] : 'Not Enrolled'
+                          findSchool ? findSchool['name'] : '--'
                         }
                       </Link>
                     </span>

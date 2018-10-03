@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { Container, Form, FormGroup, Label, Input, Button, ListGroup, ListGroupItem } from 'reactstrap';
 
 import { deleteSchool, createSchool, updateSchool } from '../reducers/schools';
+import { updateStudent } from '../reducers/students';
+
 
 class SchoolCreateUpdate extends Component {
   constructor({ school }) {
@@ -46,13 +48,24 @@ class SchoolCreateUpdate extends Component {
       this.props.updateSchool(_school)
     }
 
-    this.props.history.push('/schools')
+    this.props.history.push('/schools');
+  }
+
+  enrollment(student, school, action = false) {
+    let _student;
+    if (action) {
+      _student = Object.assign(student, { schoolId: school.id });
+    } else {
+      _student = Object.assign(student, { schoolId: null });
+    }
+    this.props.updateStudent(_student);
+    this.props.history.push(`/schools/${school.id}`);
   }
 
   render() {
     const { name, address, description } = this.state;
     const { school, students, deleteSchool } = this.props;
-    const { handleChange, handleSubmit } = this;
+    const { handleChange, handleSubmit, enrollment } = this;
     const disabled = !name || !address || !description;
     const action = this.props.id ? 'Edit' : 'Add';
 
@@ -124,7 +137,6 @@ class SchoolCreateUpdate extends Component {
 
           </Form>
         </Container>
-
         <br />
 
         {
@@ -148,7 +160,11 @@ class SchoolCreateUpdate extends Component {
                               <Button
                                 disabled={!this.props.id}
                                 color='warning'
-                                onClick={() => { if (confirm('Unenroll student?')) { href = '#' } }
+                                onClick={() => {
+                                  if (confirm('Unenroll student?')) {
+                                    enrollment(student, school)
+                                  }
+                                }
                                 }>Unenroll</Button>
                             </span>
                           </ListGroupItem>
@@ -163,7 +179,7 @@ class SchoolCreateUpdate extends Component {
                   <h2>Unenrolled Students</h2>
                   {
                     students
-                      .filter(student => student.schoolId !== school.id)
+                      .filter(student => student.schoolId === null)
                       .map(student => {
                         return (
                           <ListGroupItem key={student.id}>
@@ -175,7 +191,11 @@ class SchoolCreateUpdate extends Component {
                               <Button
                                 disabled={!this.props.id}
                                 color='warning'
-                                onClick={() => { if (confirm('Enroll student?')) { href = '#' } }
+                                onClick={() => {
+                                  if (confirm('Enroll student?')) {
+                                    enrollment(student, school, true)
+                                  }
+                                }
                                 }>Enroll</Button>
                             </span>
                           </ListGroupItem>
@@ -207,6 +227,8 @@ const mapDispatchToProps = (dispatch, { history }) => ({
   deleteSchool: (school) => dispatch(deleteSchool(school, history)),
   createSchool: (school) => dispatch(createSchool(school)),
   updateSchool: (school) => dispatch(updateSchool(school, history)),
+
+  updateStudent: (student) => dispatch(updateStudent(student, history)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SchoolCreateUpdate)

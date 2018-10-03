@@ -49,6 +49,13 @@ class StudentCreateUpdate extends Component {
       this.props.updateStudent(_student)
     }
 
+    this.setState({
+      first: '',
+      last: '',
+      gpa: '',
+      schoolId: '',
+    })
+
     this.props.history.push('/students')
   }
 
@@ -118,7 +125,7 @@ class StudentCreateUpdate extends Component {
                 onChange={handleChange}
                 type='select'
                 name='schoolId'>
-                <option key='' value=''>Not Enrolled</option>
+                <option value=''>Not Enrolled</option>
                 {
                   schools.map(school => {
                     return <option key={school.id} value={school.id}>{school.name}</option>
@@ -127,11 +134,7 @@ class StudentCreateUpdate extends Component {
               </Input>
             </FormGroup>
 
-            <Button
-              color='success'
-              disabled={disabled}
-            >Submit
-            </Button>
+            <Button color='success' disabled={disabled}>Submit</Button>
 
             <span className='floatRight'>
               <Button
