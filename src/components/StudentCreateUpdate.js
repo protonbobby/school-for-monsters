@@ -13,7 +13,7 @@ class StudentCreateUpdate extends Component {
       first: student ? student.first : '',
       last: student ? student.last : '',
       gpa: student ? student.gpa : 2.0,
-      schoolId: student ? student.schoolId : '',
+      schoolId: student ? student.schoolId : 0,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,13 +39,15 @@ class StudentCreateUpdate extends Component {
       first: this.state.first,
       last: this.state.last,
       gpa: this.state.gpa,
-      schoolId: this.state.schoolId,
+      schoolId: this.state.schoolId * 1,
     }
+
+    if (_student.schoolId == 0) { _student.schoolId = null }
 
     if (!this.props.id) {
       this.props.createStudent(_student)
     } else {
-      _student['id'] = this.props.id
+      _student['id'] = this.props.student.id;
       this.props.updateStudent(_student)
     }
 
@@ -125,7 +127,7 @@ class StudentCreateUpdate extends Component {
                 onChange={handleChange}
                 type='select'
                 name='schoolId'>
-                <option value={null}>Not Enrolled</option>
+                <option value={0}>Not Enrolled</option>
                 {
                   schools.map(school => {
                     return <option key={school.id} value={school.id}>{school.name}</option>

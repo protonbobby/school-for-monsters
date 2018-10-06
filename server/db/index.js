@@ -3,7 +3,7 @@ const conn = require('./conn');
 const School = require('./School');
 const Student = require('./Student');
 
-Student.belongsTo(School);
+Student.belongsTo(School); //{ foreignKey: { allowNull: true, onDelete: null } }
 School.hasMany(Student);
 
 const sync = () => {
