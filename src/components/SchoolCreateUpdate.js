@@ -59,13 +59,12 @@ class SchoolCreateUpdate extends Component {
       _student = Object.assign(student, { schoolId: null });
     }
     this.props.updateStudent(_student);
-    this.props.history.push(`/schools/${school.id}`);
   }
 
   render() {
     const { name, address, description } = this.state;
     const { school, students, deleteSchool } = this.props;
-    const { handleChange, handleSubmit, enrollment } = this;
+    const { handleChange, handleSubmit } = this;
     const disabled = !name || !address || !description;
     const action = this.props.id ? 'Edit' : 'Add';
 
@@ -162,7 +161,7 @@ class SchoolCreateUpdate extends Component {
                                 color='warning'
                                 onClick={() => {
                                   if (confirm('Unenroll student?')) {
-                                    enrollment(student, school)
+                                    this.enrollment(student, school)
                                   }
                                 }
                                 }>Unenroll</Button>
@@ -193,7 +192,7 @@ class SchoolCreateUpdate extends Component {
                                 color='warning'
                                 onClick={() => {
                                   if (confirm('Enroll student?')) {
-                                    enrollment(student, school, true)
+                                    this.enrollment(student, school, true)
                                   }
                                 }
                                 }>Enroll</Button>
@@ -228,7 +227,7 @@ const mapDispatchToProps = (dispatch, { history }) => ({
   createSchool: (school) => dispatch(createSchool(school)),
   updateSchool: (school) => dispatch(updateSchool(school, history)),
 
-  updateStudent: (student) => dispatch(updateStudent(student, history)),
+  updateStudent: (student) => dispatch(updateStudent(student)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SchoolCreateUpdate)
+export default connect(mapStateToProps, mapDispatchToProps)(SchoolCreateUpdate);

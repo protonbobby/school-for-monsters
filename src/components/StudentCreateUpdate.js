@@ -42,7 +42,7 @@ class StudentCreateUpdate extends Component {
       schoolId: this.state.schoolId * 1,
     }
 
-    if (_student.schoolId == 0) { _student.schoolId = null }
+    if (_student.schoolId === 0) { _student.schoolId = null }
 
     if (!this.props.id) {
       this.props.createStudent(_student)
@@ -55,7 +55,7 @@ class StudentCreateUpdate extends Component {
       first: '',
       last: '',
       gpa: '',
-      schoolId: '',
+      schoolId: 0,
     })
 
     this.props.history.push('/students')
