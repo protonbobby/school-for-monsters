@@ -5,13 +5,13 @@ router.get('/', (req, res, next) => {
   Student.findAll({
     order: [['last', 'ASC']],
   })
-    .then(students => res.send(students))
+    .then(students => res.status(200).send(students))
     .catch(next)
 });
 
 router.get('/:id', (req, res, next) => {
   Student.findById(req.params.id)
-    .then(student => res.send(student))
+    .then(student => res.status(200).send(student))
     .catch(next)
 });
 
@@ -22,17 +22,16 @@ router.delete('/:id', (req, res, next) => {
     .catch(next)
 });
 
-router.use(require('body-parser').json());
 router.post('/', (req, res, next) => {
   Student.create(req.body)
-    .then(student => res.send(student))
+    .then(student => res.status(201).send(student))
     .catch(next)
 });
 
 router.put('/:id', (req, res, next) => {
   Student.findById(req.params.id)
     .then(student => student.update(req.body))
-    .then(student => res.send(student))
+    .then(student => res.status(200).send(student))
     .catch(next)
 });
 

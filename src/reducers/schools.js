@@ -5,27 +5,32 @@ export const DELETE_SCHOOL = 'DELETE_SCHOOL';
 export const CREATE_SCHOOL = 'CREATE_SCHOOL';
 export const UPDATE_SCHOOL = 'UPDATE_SCHOOL';
 
-const _loadSchools = (schools) => ({
+const _loadSchools = schools => ({
   type: LOAD_SCHOOLS,
-  schools,
+  schools
 })
 
-const _deleteSchool = (school) => ({
+const _deleteSchool = school => ({
   type: DELETE_SCHOOL,
-  school,
+  school
 })
 
-const _createSchool = (school) => ({
+const _createSchool = school => ({
   type: CREATE_SCHOOL,
-  school,
+  school
 })
 
-const _updateSchool = (school) => ({
+const _updateSchool = school => ({
   type: UPDATE_SCHOOL,
-  school,
+  school
 })
 
-const schoolsInitialState = [];
+const schoolsInitialState = [
+  //name: '',
+  //address: '',
+  //description: 'text',
+  //id: 0,
+];
 const schoolsReducer = (state = schoolsInitialState, action) => {
   switch (action.type) {
     case LOAD_SCHOOLS:
@@ -40,42 +45,30 @@ const schoolsReducer = (state = schoolsInitialState, action) => {
   };
 };
 
-export const loadSchools = () => {
-  return dispatch => {
-    axios.get('/api/schools')
-      .then(res => res.data)
-      .then(schools => dispatch(_loadSchools(schools)))
-      .catch(e => console.log(e));
-  };
-};
+export const loadSchools = () => dispatch => (
+  axios.get('/api/schools')
+    .then(res => res.data)
+    .then(schools => dispatch(_loadSchools(schools)))
+);
 
-export const deleteSchool = (school, history) => {
-  return dispatch => {
-    axios.delete(`/api/schools/${school.id}`)
-      .then(res => res.data)
-      .then(() => dispatch(_deleteSchool(school)))
-      .then(() => history.push('/schools'))
-      .catch(e => console.log(e));
-  };
-};
+export const deleteSchool = (school, history) => dispatch => (
+  axios.delete(`/api/schools/${school.id}`)
+    .then(res => res.data)
+    .then(() => dispatch(_deleteSchool(school)))
+    .then(() => history.push('/schools'))
+);
 
-export const createSchool = (school) => {
-  return dispatch => {
-    axios.post('/api/schools', school)
-      .then(res => res.data)
-      .then(school => dispatch(_createSchool(school)))
-      .catch(e => console.log(e));
-  };
-};
+export const createSchool = school => dispatch => (
+  axios.post('/api/schools', school)
+    .then(res => res.data)
+    .then(school => dispatch(_createSchool(school)))
+);
 
-export const updateSchool = (school, history) => {
-  return dispatch => {
-    axios.put(`/api/schools/${school.id}`, school)
-      .then(res => res.data)
-      .then(school => dispatch(_updateSchool(school)))
-      .then(() => history.push('/schools'))
-      .catch(e => console.log(e));
-  };
-};
+export const updateSchool = (school, history) => dispatch => (
+  axios.put(`/api/schools/${school.id}`, school)
+    .then(res => res.data)
+    .then(school => dispatch(_updateSchool(school)))
+    .then(() => history.push('/schools'))
+);
 
 export default schoolsReducer;

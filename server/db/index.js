@@ -2,8 +2,9 @@ const conn = require('./conn');
 
 const School = require('./School');
 const Student = require('./Student');
+const User = require('./User');
 
-Student.belongsTo(School); //{ foreignKey: { allowNull: true, onDelete: null } }
+Student.belongsTo(School);
 School.hasMany(Student);
 
 const sync = () => {
@@ -14,6 +15,8 @@ const syncAndSeed = () => {
   conn.sync({ force: true })
     .then(() => {
       Promise.all([
+        User.create({ name: 'sashimi', password: 'SASHIMI' }),
+        //_________________________________________________
         School.create({
           name: 'One Eyed Monsters',
           address: '1313 Mockingbird Lane',

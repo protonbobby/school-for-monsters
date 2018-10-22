@@ -5,27 +5,33 @@ export const DELETE_STUDENT = 'DELETE_STUDENT';
 export const CREATE_STUDENT = 'CREATE_STUDENT';
 export const UPDATE_STUDENT = 'UPDATE_STUDENT';
 
-const _loadStudents = (students) => ({
+const _loadStudents = students => ({
   type: LOAD_STUDENTS,
-  students,
+  students
 });
 
-const _deleteStudent = (student) => ({
+const _deleteStudent = student => ({
   type: DELETE_STUDENT,
-  student,
+  student
 });
 
-const _createStudent = (student) => ({
+const _createStudent = student => ({
   type: CREATE_STUDENT,
-  student,
+  student
 })
 
-const _updateStudent = (student) => ({
+const _updateStudent = student => ({
   type: UPDATE_STUDENT,
-  student,
+  student
 })
 
-const studentsInitialState = []
+const studentsInitialState = [
+  // first: '',
+  // last: '',
+  // gpa: 0,
+  // schoolId: 0,
+  // id: 0,
+]
 const studentsReducer = (state = studentsInitialState, action) => {
   switch (action.type) {
     case LOAD_STUDENTS:
@@ -40,42 +46,30 @@ const studentsReducer = (state = studentsInitialState, action) => {
   };
 };
 
-export const loadStudents = () => {
-  return dispatch => {
-    axios.get('/api/students')
-      .then(res => res.data)
-      .then(students => dispatch(_loadStudents(students)))
-      .catch(e => console.log(e));
-  };
-};
+export const loadStudents = () => dispatch => (
+  axios.get('/api/students')
+    .then(res => res.data)
+    .then(students => dispatch(_loadStudents(students)))
+);
 
-export const deleteStudent = (student, history) => {
-  return dispatch => {
-    axios.delete(`/api/students/${student.id}`)
-      .then(res => res.data)
-      .then(() => dispatch(_deleteStudent(student)))
-      .then(() => history.push('/students'))
-      .catch(e => console.log(e));
-  };
-};
+export const deleteStudent = (student, history) => dispatch => (
+  axios.delete(`/api/students/${student.id}`)
+    .then(res => res.data)
+    .then(() => dispatch(_deleteStudent(student)))
+    .then(() => history.push('/students'))
+);
 
-export const createStudent = (student) => {
-  return dispatch => {
-    return axios.post('/api/students', student)
-      .then(res => res.data)
-      .then(student => dispatch(_createStudent(student)))
-      .catch(e => console.log(e));
-  };
-};
+export const createStudent = student => dispatch => (
+  axios.post('/api/students', student)
+    .then(res => res.data)
+    .then(student => dispatch(_createStudent(student)))
+);
 
-export const updateStudent = (student, history) => {
-  return dispatch => {
-    return axios.put(`/api/students/${student.id}`, student)
-      .then(res => res.data)
-      .then(student => dispatch(_updateStudent(student)))
-      .then(() => history.push('/students'))
-      .catch(e => console.log(e));
-  };
-};
+export const updateStudent = (student, history) => dispatch => (
+  axios.put(`/api/students/${student.id}`, student)
+    .then(res => res.data)
+    .then(student => dispatch(_updateStudent(student)))
+    .then(() => history.push('/students'))
+);
 
 export default studentsReducer;
